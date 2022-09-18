@@ -24,29 +24,44 @@ def mostrar_salida():
         saliir = False
     return saliir
 
+def insertando(insertion_index, p_name, u):
+    while u > 0 :
+        process_list[insertion_index] = p_name
+        insertion_index += 1 #Avanzamos a la siguiente insercion
+        u -= 0 #Reducimos el contador de unidades de memoria a insertar del proceso 
+    print(f'\tMemoria insertada correctamente, lista de procesos actualizada: \n {process_list}')
+
 def asigna_o_compacta(p_name, u) :
     index = 0
     continuous_space_count = 0
     spaces_available = 0
     insercion_compactada = False
     
-    for index in len(process_list):
+    #ANTES DE CONTINUAR HACER BOOBLE SORT para la busqueda del espacio contiguo y ya si no esta ahora si hacer la compactacion de memoria
+
+    for index in (len(process_list)-1):
         if process_list[index] == '-' :
             continuous_space_count += 1
             spaces_available += continuous_space_count
-            if continuous_space_count > u :
+            if continuous_space_count >= u :
                 print('\tSi hay suficiente memoria contigua')
+                break
                 #aqui sabemos el indice de insercion_contigua 
         else:
             spaces_available += continuous_space_count
             continuous_space_count = 0
             insercion_compactada = True
+            if spaces_available >= u :
+                print('\tSi hay suficiente, procedere a compactar la memoria para realizar la insercion')
+                break
     
+    insertion_index = index - u
     #Despues de este ciclo ya sabemos en que parte de la lista hay la memoria suficiente, ya sea continua o compactada
     if insercion_compactada == True :   
-        print('\tNecesito realizar una compactacion de memoria, para poder ingresar el nuevo proceso, estoy en eso ;) ')
+        print('\tcompactando... ')
     else:
-        print('Procedere a insertar la memoria del proceso')
+        print('\tProcedere a insertar la memoria del proceso')
+        insertando(insertion_index, p_name, u)
 
 
 def corrobora_memoria(process_name , unidades):
