@@ -28,40 +28,47 @@ def insertando(insertion_index, p_name, u):
     while u > 0 :
         process_list[insertion_index] = p_name
         insertion_index += 1 #Avanzamos a la siguiente insercion
-        u -= 0 #Reducimos el contador de unidades de memoria a insertar del proceso 
+        u -= 1 #Reducimos el contador de unidades de memoria a insertar del proceso 
     print(f'\tMemoria insertada correctamente, lista de procesos actualizada: \n {process_list}')
 
 def asigna_o_compacta(p_name, u) :
-    index = 0
+    index = 1
     continuous_space_count = 0
     spaces_available = 0
     insercion_compactada = False
-    
-    #ANTES DE CONTINUAR HACER BOOBLE SORT para la busqueda del espacio contiguo y ya si no esta ahora si hacer la compactacion de memoria
+    first_unit_available = False  #Para activar logica despues de que se haya encontrado un espacio de memoria disponible
 
-    for index in (len(process_list)-1):
-        if process_list[index] == '-' :
-            continuous_space_count += 1
-            spaces_available += continuous_space_count
-            if continuous_space_count >= u :
-                print('\tSi hay suficiente memoria contigua')
-                break
-                #aqui sabemos el indice de insercion_contigua 
+    for item in process_list :
+        if item != '-' and first_unit_available ==  False:
+            pass 
         else:
-            spaces_available += continuous_space_count
-            continuous_space_count = 0
-            insercion_compactada = True
-            if spaces_available >= u :
-                print('\tSi hay suficiente, procedere a compactar la memoria para realizar la insercion')
-                break
+            first_unit_available = True #Ya se encontro al menos un elemento disponible de memoria para iniciar la cuenta
+            if item == '-' :
+                continuous_space_count += 1
+                spaces_available += continuous_space_count
+                if continuous_space_count >= u :
+                    print('\tSi hay suficiente memoria contigua')
+                    break
+                    #aqui sabemos el indice de insercion_contigua 
+            else:
+                spaces_available += continuous_space_count
+                continuous_space_count = 0
+                insercion_compactada = True
+                if spaces_available >= u :
+                    print('\tSi hay suficiente, procedere a compactar la memoria para realizar la insercion')
+                    break
+        index += 1
     
-    insertion_index = index - u
     #Despues de este ciclo ya sabemos en que parte de la lista hay la memoria suficiente, ya sea continua o compactada
+    insertion_index = index - u
     if insercion_compactada == True :   
         print('\tcompactando... ')
     else:
         print('\tProcedere a insertar la memoria del proceso')
+        print(f'insertion = {insertion_index} \t p_name = {p_name} \t u = {u}')
         insertando(insertion_index, p_name, u)
+
+
 
 
 def corrobora_memoria(process_name , unidades):
