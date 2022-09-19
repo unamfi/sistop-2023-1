@@ -32,6 +32,7 @@ def compactando_memoria():
     while len(compact_list) < 30:
         compact_list.append("-") #rellenando espacios vacios
     print(f'\t\tLista compactada : \n\t\t{compact_list}')
+    process_list = compact_list
     return compact_list
 
 def insertando(insertion_index, p_name, u, insercion_compactada):
