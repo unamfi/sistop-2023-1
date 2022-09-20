@@ -97,7 +97,9 @@ def asigna_o_compacta(p_name, u, process_list) :
     else:
         print('\tProcedere a insertar la memoria del proceso')
         print(f'insertion = {insertion_index} \t p_name = {p_name} \t u = {u}')
-        process_list = insertando(insertion_index, p_name, u, insercion_compactada, process_list)     
+        process_list = insertando(insertion_index, p_name, u, insercion_compactada, process_list) 
+
+    return process_list
 
 
 
@@ -112,10 +114,11 @@ def corrobora_memoria(process_name , unidades):
 
     if space > unidades:
         print(f'\t\ttenemos {space} unidades disponibles, si podemos hacer la asignacion :D')
-        asigna_o_compacta(p_name, u, process_list)
+        process_list = asigna_o_compacta(p_name, u, process_list)
         #asigna_o_compacta(p_name, u )
     else:
         print(f'\t\ttenemos {space} unidades disponibles, NO hay memoria suficiente :c')
+    return process_list
 
 
 def asignar():
@@ -140,7 +143,14 @@ def asignar():
 
 
 def liberar():
-    print('Funcion de LIBERAR activada xd')
+    n_pr = input('\t Cual es el nombre del proceso que desea eliminar?\t')
+    index_liberacion = 0
+    for item in process_list:
+        if item == n_pr:
+            process_list[index_liberacion] = "-"
+        index_liberacion +=1
+    print(f'\tMemoria liberada, lista de procesos: \n\t{process_list}')    
+
 
 
 
