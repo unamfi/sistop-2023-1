@@ -1,4 +1,7 @@
-
+""" 
+Mejia Alba Israel Hipolito
+                    Simulador de administrador de procesos :)
+"""
 salir = False
 process_list = [
                 'A','A','-','-','B'
