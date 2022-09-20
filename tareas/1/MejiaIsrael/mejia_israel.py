@@ -15,13 +15,14 @@ def mostrar_salida():
     print('\nPor ultimo, deseas salir del administrador de procesos?')
     saliir = int(input('1 = Si        2= No \n\t'))
     if saliir == 1:
-        print('Un gusto verte por aqui, hasta luego :)')
+        print('Un gusto verte por aqui, hasta luego :)\n\n')
         saliir = True
     else :
         saliir = False
     return saliir
 
-def compactando_memoria():
+#def compactando_memoria():
+def compactando_memoria(process_list):
     compact_list = []
     print(f'\t\tLista original : \n\t\t{process_list}\n')
     for item in process_list:
@@ -35,7 +36,7 @@ def compactando_memoria():
     process_list = compact_list
     return compact_list
 
-def insertando(insertion_index, p_name, u, insercion_compactada):
+def insertando(insertion_index, p_name, u, insercion_compactada, process_list) :
     if insercion_compactada == False:
         while u > 0 :
             process_list[insertion_index] = p_name
@@ -53,11 +54,12 @@ def insertando(insertion_index, p_name, u, insercion_compactada):
             index_compact_space += 1 #Avanzamos a la siguiente insercion
             u -= 1 
     print(f'\tMemoria insertada correctamente, lista de procesos actualizada: \n\t{process_list}')
+    return process_list    
         
 
 
-#def asigna_o_compacta(p_name, u, process_list) :
-def asigna_o_compacta(p_name, u ) :
+def asigna_o_compacta(p_name, u, process_list) :
+#def asigna_o_compacta(p_name, u ) :
     index = 1
     continuous_space_count = 0
     spaces_available = 0
@@ -89,13 +91,13 @@ def asigna_o_compacta(p_name, u ) :
     insertion_index = index - u
     if insercion_compactada == True :   
         print('\tcompactando... ')
-        process_list = compactando_memoria()
+        process_list = compactando_memoria(process_list)
         #process_list = process_list2
-        insertando(insertion_index, p_name, u, insercion_compactada)     
+        process_list = insertando(insertion_index, p_name, u, insercion_compactada, process_list)     
     else:
         print('\tProcedere a insertar la memoria del proceso')
         print(f'insertion = {insertion_index} \t p_name = {p_name} \t u = {u}')
-        insertando(insertion_index, p_name, u, insercion_compactada)
+        process_list = insertando(insertion_index, p_name, u, insercion_compactada, process_list)     
 
 
 
@@ -110,8 +112,8 @@ def corrobora_memoria(process_name , unidades):
 
     if space > unidades:
         print(f'\t\ttenemos {space} unidades disponibles, si podemos hacer la asignacion :D')
-        #asigna_o_compacta(p_name, u, process_list)
-        asigna_o_compacta(p_name, u )
+        asigna_o_compacta(p_name, u, process_list)
+        #asigna_o_compacta(p_name, u )
     else:
         print(f'\t\ttenemos {space} unidades disponibles, NO hay memoria suficiente :c')
 
@@ -156,3 +158,4 @@ while salir == False:
 
     salir = mostrar_salida()
     
+ 
