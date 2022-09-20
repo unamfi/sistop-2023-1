@@ -28,7 +28,7 @@ def compactando_memoria(process_list):
     for item in process_list:
         if item != "-":
             compact_list.append(item)
-    print(f'\t\tLista sin espacios: \n\t\t{compact_list}')
+    #print(f'\t\tLista sin espacios: \n\t\t{compact_list}') 
 
     while len(compact_list) < 30:
         compact_list.append("-") #rellenando espacios vacios
@@ -104,7 +104,7 @@ def asigna_o_compacta(p_name, u, process_list) :
 
 
 
-def corrobora_memoria(process_name , unidades):
+def corrobora_memoria(process_name , unidades, process_list):
     p_name = process_name
     u = unidades
     space = 0
@@ -121,7 +121,7 @@ def corrobora_memoria(process_name , unidades):
     return process_list
 
 
-def asignar():
+def asignar(process_list):
     print('\n\tCreando nueva Asignaicion de proceso')
     print('\t\t-Recuerda que solo puedes asignar procesos que tengan entre 2 y 15 unidades de memoria')
     print('\t\t-No puede haber procesos con el mismo nombe (letra ya utilizada sin importar mayusculas o minusculas)')
@@ -134,38 +134,41 @@ def asignar():
         if ( unidades > 1 and unidades < 16 ):
             print(f'\tListo, el nuevo proceso a asignar sera:\t {process_name}  con {unidades} unidades de memoria')
             print('\tCorroborando si hay memoria disponible para hacer la asignaicion...')
-            corrobora_memoria(process_name , unidades)
+            process_list = corrobora_memoria(process_name , unidades, process_list)
         else:
             print('\t\t\tCantidad de unidades de memoria invalido')
+    return process_list
 
 
 
 
 
-def liberar():
-    n_pr = input('\t Cual es el nombre del proceso que desea eliminar?\t')
+def liberar(process_list):
+    n_pr = (input('\t Cual es el nombre del proceso que desea eliminar?\t')).upper()
     index_liberacion = 0
     for item in process_list:
         if item == n_pr:
             process_list[index_liberacion] = "-"
         index_liberacion +=1
-    print(f'\tMemoria liberada, lista de procesos: \n\t{process_list}')    
+    print(f'\tMemoria liberada, lista de procesos: \n\t{process_list}')
+    return process_list    
 
 
 
+def ejecutar_admin_procesos(process_list, salir):
+    while salir == False:
+        print('\n\t\tBienvenido al administrador de procesos de Israel Mejia :D\n')
+        print(f'A continuacion puedes ver los procesos actuales, cada letra representa una unidad de memoria del respectivo proceso: \n {process_list}')
+        print('Ahora bien, que accion desea realizar?')
+        accion = int(input('\tAsignar (0)     o   liberar (1) \n\t'))
+        if accion == 0:
+            process_list = asignar(process_list)
+        elif accion == 1:
+            process_list = liberar(process_list)
+        else:
+            print('\t\tOpcion no valida')
 
-while salir == False:
-    print('\n\t\tBienvenido al administrador de procesos de Israel Mejia :D\n')
-    print(f'A continuacion puedes ver los procesos actuales, cada letra representa una unidad de memoria del respectivo proceso: \n {process_list}')
-    print('Ahora bien, que accion desea realizar?')
-    accion = int(input('\tAsignar (0)     o   liberar (1) \n\t'))
-    if accion == 0:
-        asignar()
-    elif accion == 1:
-        liberar()
-    else:
-        print('\t\tOpcion no valida')
+        salir = mostrar_salida()
 
-    salir = mostrar_salida()
-    
+ejecutar_admin_procesos(process_list, salir)
  
