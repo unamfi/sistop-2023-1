@@ -3,6 +3,11 @@
         Tarea creada el 08.09.2022
         Entrega: 13.09.2022
 
+## Lista la revisión
+
+A partir del 24 de septiembre, pueden [consultar la revisión de las
+entregas de esta tarea](./revision.org).
+
 ## Recuerden crear una nueva rama...
 
 Recuerden que conviene iniciar su trabajo con una nueva _rama
