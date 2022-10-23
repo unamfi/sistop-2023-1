@@ -175,6 +175,66 @@
     lectura.
 - Calificación :: 10
 
+** Mejia Bryan
+- Archivos :: [[./MejiaBryan/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Buena implementación
+  - Me gustó que cada proceso fuera una cadena diferente sobre un
+    arreglo de 30 elementos. Sin embargo, lleva a algunos detalles
+    "interesantes". Dado que no estás verificando que cada elemento
+    mida un caracter, puedo hacer:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      Algo
+      ¿Cuantas unidades necesita el nuevo proceso?
+      5
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAlgoAlgoAlgoAlgoAlgo-------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+  - El programa no verifica que un proceso no exista ya en el listado:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      A
+      ¿Cuantas unidades necesita el nuevo proceso?
+      2
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAA----------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+    - Y por tanto, a la hora de liberar...
+      #+begin_src text
+	Memoria actual:
+	-AAABBAA----------------------
+	Asignar 0, liberar 1: 
+	1
+
+	¿Que proceso quiere liberar? :D (A B A )
+	A
+	Quieres continuar: S/N
+	S
+	Memoria actual:
+	----BB------------------------
+	Asignar 0, liberar 1: 
+      #+end_src    
+- Calificación :: 10
+
 ** Mendez Erick, Rodriguez Carla
 - Archivos :: [[./MendezErick-RodriguezCarla/Memoria.java][Memoria.java]]
 - Lenguaje :: Java
