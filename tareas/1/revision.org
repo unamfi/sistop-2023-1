@@ -175,6 +175,66 @@
     lectura.
 - Calificación :: 10
 
+** Mejia Bryan
+- Archivos :: [[./MejiaBryan/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Buena implementación
+  - Me gustó que cada proceso fuera una cadena diferente sobre un
+    arreglo de 30 elementos. Sin embargo, lleva a algunos detalles
+    "interesantes". Dado que no estás verificando que cada elemento
+    mida un caracter, puedo hacer:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      Algo
+      ¿Cuantas unidades necesita el nuevo proceso?
+      5
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAlgoAlgoAlgoAlgoAlgo-------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+  - El programa no verifica que un proceso no exista ya en el listado:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      A
+      ¿Cuantas unidades necesita el nuevo proceso?
+      2
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAA----------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+    - Y por tanto, a la hora de liberar...
+      #+begin_src text
+	Memoria actual:
+	-AAABBAA----------------------
+	Asignar 0, liberar 1: 
+	1
+
+	¿Que proceso quiere liberar? :D (A B A )
+	A
+	Quieres continuar: S/N
+	S
+	Memoria actual:
+	----BB------------------------
+	Asignar 0, liberar 1: 
+      #+end_src    
+- Calificación :: 10
+
 ** Mendez Erick, Rodriguez Carla
 - Archivos :: [[./MendezErick-RodriguezCarla/Memoria.java][Memoria.java]]
 - Lenguaje :: Java
@@ -249,3 +309,75 @@
       compactación (lo cual sería lindo, pero es terriblemente irreal).
 - Calificación :: 8.5
 
+** Guerrero Issac
+- Archivos :: [[./BarrigueteHector/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Tu programa no reporta error en caso de estar la memoria llena:
+    #+begin_src python
+      ['A', 'B', 'B', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', 'H', 'H', 'H', 'H', 'F', 'F', 'F', 'F', 'G', 'G', 'G', 'G', 'G', 'G', 'G']
+      Asignar(0) o Liberar (1) o Salir (3)
+
+      0
+      Escribe letra del proceso
+      W
+      Escribe cantidad de memoria
+      4
+      ['A', 'B', 'B', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', 'H', 'H', 'H', 'H', 'F', 'F', 'F', 'F', 'G', 'G', 'G', 'G', 'G', 'G', 'G']
+      Asignar(0) o Liberar (1) o Salir (3)                                                                                                                    
+    #+end_src
+  - Tampoco validas que se solicite espacio para un proceso que ya
+    tienes, lo cual podría causar confusión:
+    #+begin_src python
+      ['T', 'T', 'T', 'T', 'R', 'R', 'R', 'E', 'E', 'E', '-', '-', '-', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', '-', '-', 'F', 'F', 'F', 'F', 'F']
+      Asignar(0) o Liberar (1) o Salir (3)
+
+      0
+      Escribe letra del proceso
+      R
+      Escribe cantidad de memoria
+      2
+      maximo_espacio: 3
+      10
+      el valor de compactacion es: 10
+      ['T', 'T', 'T', 'T', 'R', 'R', 'R', 'E', 'E', 'E', 'R', 'R', '-', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', '-', '-', 'F', 'F', 'F', 'F', 'F'] 
+    #+end_src
+- Calificación :: 10
+
+** Barriguete Héctor
+- Archivos :: [[./GuerreroIssac/memoria.py][memoria.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Mismo comentario que al programa anterior: No validas si se está
+    solicitando espacio para un proceso que ya existe, lo cual puede
+    ser confuso:
+    #+begin_src python
+      ------------ Menu ------------
+      1. Asignar memoria
+      2. Liberar memoria
+      3. Salir
+      Opcion: 1
+
+      Ingresa el nuevo elemento: C
+      Ingresa la longitud del nuevo elemento: 3
+
+      Asignación actual:
+      AAAAABBBBBBBCCC---------------
+      Asignar (0) o liberar (1): 0
+      Nuevo proceso (C): 3
+      Nueva asignacion:
+      AAAAABBBBBBBCCCCCC------------
+    #+end_src
+  - Tampoco validas que el nombre de un elemento sea de un sólo
+    caracter:
+    #+begin_src python
+      Asignación actual:
+      AAAAABBBBBBB----FFF-----------
+      Asignar (0) o liberar (1): 0
+      Nuevo proceso (Cuac.): 3
+      Nueva asignacion:
+      AAAAABBBBBBBCuac.Cuac.Cuac.-FFF-----------
+    #+end_src
+- Calificación :: 10
