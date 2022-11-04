@@ -1,0 +1,15 @@
+Alumnos: Méndez Sánchez Erick Jair
+	 Rodriguez Colorado Carla Elizabeth
+
+* El problema que decidieron resolver: 
+  El cruce del rio
+* El lenguaje y entorno en que lo desarrollaron: 
+  Fue desarrollado en python
+* ¿Qué tengo que saber / tener / hacer para ejecutar su programa en mi computadora?
+  Basta con ejecutarlo desde google colab, si se requiere ejecutar en la computadora solo se necesitará Python 3.
+* La estrategia de sincronización (mecanismo / patrón) que les funcionó: 
+  Fue implementado mediante barreras y un multiplex
+* Si están implementando alguno de los refinamientos: 
+  No
+* Cualquier duda que tengan. Si notan que algún pedazo de la implementación podría mejorar, si algo no les terminó de quedar bien...
+ Abusamos de las barreras para sincronizar los hilos, es posible que exista una forma mas sencilla de realizar el ejercicio.
