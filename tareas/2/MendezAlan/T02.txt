@@ -1,0 +1,17 @@
+-El problema que decidieron resolver
+	El Cruce del Río.
+
+-El lenguaje y entorno en que lo desarrollaron.
+	¿Qué tengo que saber / tener / hacer para ejecutar su programa en mi computadora?
+	Lenguaje: Python.
+
+-La estrategia de sincronización (mecanismo / patrón) que les funcionó
+	Se implementadron semáforos para que no pasaran más de dos hackers o serfs al mismo tiempo. 
+	Otro más se uso para que a la balsa no subiesen diferente número de 4 personas.
+	La balsa sería hecha con un multiplex.
+
+-Si están implementando alguno de los refinamientos
+	No hay uso de los refinamientos
+
+-Cualquier duda que tengan. Si notan que algún pedazo de la implementación podría mejorar, si algo no les terminó de quedar bien...
+	Mi duda surge en cómo representar en consola de manera más estética o entendible la impresión para una mejor visualización de los sucesos.
