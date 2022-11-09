@@ -1,0 +1,172 @@
+** Hector Barriguete
+- Documentación :: [[./BarrigueteHector/tarea#2.pdf][tarea#2.pdf]]
+- Archivos :: [[./BarrigueteHector/balsa.py][balsa.py]]
+- Problema resuelto :: El cruce del río
+- Comentarios ::
+  - Lograste cumplir con los requisitos, pero lo hiciste /serializando
+    la ejecución/ del programa ☹
+    - Si lo primero que haces al entrar a tu función =pasajero(id)= es
+      =mutex.acquire()=, y lo último que haces al salir de la misma es
+      =mutex.release()=, para fines prácticos estás trabajando con un
+      único hilo (no hay trabajo en paralelo ☹)
+  - No considero que esta sea una respuesta válida empleando
+    mecanismos de sincronización, pero te doy crédito por hacer un
+    intento funcional.
+- Calificación :: 7.5
+
+** Erick Mendez, Carla Rodriguez
+- Documentación :: [[./MendezErick-RodriguezCarla/tarea2.txt][tarea2.txt]], [[./MendezErick-RodriguezCarla/tarea2_EjercicioSincronizacion.txt][tarea2_EjercicioSincronizacion.txt]]
+- Archivos :: [[./MendezErick-RodriguezCarla/cruzando_el_río.py][cruzando_el_río.py]]
+- Problema resuelto :: El cruce del río
+- Comentarios ::
+  - La lógica que siguen es correcta. ¡Y no se preocupen! Modelar
+    correctamente la interacción de este problema... suena más
+    sencillo de lo que es en realidad.
+  - ¿Por qué lanzan 4 hackers y /7/ serfs? Necesariamente se quedan
+    tres esperando para siempre a que llegue su último amiguito ☹
+    - Lo cambié a 8 y 8, y funciona correctamente
+  - La demora que introdujeron al principio estaaba en el lugar
+    equivocado: Al poner el =time.sleep(random.randint(0,2))= en el
+    ciclo de lanzamiento de hilos =serf=, los =hack= salían todos
+    ordenaditos antes de que los =serfs= llegaran. Pero si movemos la
+    demora para que quede como primera línea tanto de =hacker(id)=
+    como de =serf(id)=, la interacción se presenta bien:
+    #+begin_src python
+      Hacker 2 esperando
+      Subo a la balsa soy hack 2
+      Subo a la balsa soy hack 3
+      Serf 5 esperando
+      Subo a la balsa soy serf 5
+      Subo a la balsa soy serf 2
+      Adios, zarpamos
+      Adios, zarpamos
+      Adios, zarpamos
+      Adios, zarpamos
+    #+end_src
+    😃
+- Calificación :: 10
+
+** Jesus Fajardo
+- Documentación :: [[./FajardoJesus/Tarea2.txt][Tarea2.txt]]
+- Archivos :: [[./FajardoJesus/Tarea2.py][Tarea2.py]]
+- Problema resuelto :: El cruce del río
+- Comentarios ::
+  - ¡Pero qué impacientes tus hilos! Cuando uno de tus hilos no puede
+    subir, no se duerme para esperar su turno: Simplemente se va ☹
+    - Eso suena a una tarea para... ¡Más sincronización! 😉)
+  - Como lo menciona tu documentación, tu código está basado en el
+    manejo de mutex+multiplex. Sin embargo:
+    - Acceso no protegido a variables compartidas en la comparación
+      con la que decides si cada hilo puede subir o no (¡condición de
+      carrera!)
+    - La lógica del control de acceso a la balsa está manejada por un
+      =if=, estás usando lógica secuencial.
+  - Ojo, lo que manejas como =barrera= /no es/ una barrera, sino que
+    un mutex
+    - ¡Oh! Entonces tengo que cambiar lo que escribí arriba (pero lo
+      dejo como... evidencia de mi lógica al leer tu código 😉): Si
+      bien lanzas los 12 hilos, este mutex /serializa su
+      ejecución/. No vas a tener condiciones de carrera, pero no vas a
+      aprovechar la concurrencia, porque únicamente un hilo
+      (indistinto si es =Hacker()= o =Serf()=) estárá activo al mismo
+      tiempo.
+- Calificación :: 7.5
+
+** Alan Méndez
+- Documentación :: [[./MendezAlan/T02.txt]]
+- Archivos :: [[./MendezAlan/T02Balsa.py][T02Balsa.py]]
+- Problema resuelto :: El cruce del río
+- Comentarios ::
+  - ¡Muy bien! Me parece que tu ejemplo es el que más se acerca a lo
+    más sencillo posible empleando únicamente mecanismos de
+    sincronización.
+  - Me parece curiosa la caracterización que haces: Lanzas
+    =numHackers + numSerfs= desarrolladores, que se pasan toda la vida
+    llegando a la balsa (por el mismo lado) y cruzando el río hacia el
+    congreso (recuerda que la balsa /retorna solita/). Pero tu código
+    funciona bien incluso retirando ese =while True=.
+  - Respecto a tu pregunta: Bueno, lo más sencillo y /simplote/ es
+    simplemente mandar una /bitácora de acciones/ a consola, con
+    =print()=. Pero el embellecimiento está limitado únicamente por tu
+    imaginación.
+    - Puedes ayudarte coloreando las líneas de la salida, escribiendo
+      directamente los códigos ANSI, o mejor aún, con módulos como
+      =colorama=:
+      #+begin_src python
+	from colorama import Fore,Back,Style
+	print("Acá todo está", Fore.GREEN, Back.BLUE, "bien y bonito", Style.RESET_ALL, ".")
+      #+end_src
+    - Puedes dibujar un "mapa" de la situación que estás
+      describiendo. Una de las bibliotecas más completas para esto es
+      =curses=; te permite direccionar sobre la terminal a partir de
+      coordenadas, dibujar, obtener interactividad mediante el teclado
+      y el mouse... Pero es un poco complicadito. Te dejo únicamente
+      la [[https://docs.python.org/3/howto/curses.html][liga a un tutorial básico]]. Hay varios más, como
+      [[https://pythonawesome.com/a-simple-yet-powerful-tui-framework-for-your-python-3-7-applications/][pytermgui]]. Y... bueno, puedes seguir buscándole desde ahí 😉
+    - O por otro lado, ¿por qué no hacer una aplicación gráfica
+      completa? No es difícil, aunque sí un poco laborioso. Y claro,
+      hay también todo tipo de bibliotecas disponibles: [[https://docs.python.org/3/library/tk.html][Tk]], [[https://python-gtk-3-tutorial.readthedocs.io/en/latest/][Gtk]], [[https://pythonpyqt.com/][Qt]],
+      [[https://doc.qt.io/qtforpython/gettingstarted.html][wxPython]], y puedo asegurarte que muchas más.
+- Calificación :: 10
+
+** Issac Alexander Guerrero Prado
+- Archivos :: [[./GuerreroPradoIssacAlexander/tarea2.py][tarea2.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - ¡Buena implementación! Cortita, al grano y completa.
+- Calificación :: 10
+
+** María Muñoz, Esteban Tafolla
+- Documentación :: [[./MuñozMaría-TafollaEsteban/Tarea2.txt][Tarea2.txt]]
+- Archivos :: [[./MuñozMaría-TafollaEsteban/gatos_ratones.py][gatos_ratones.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - El programa funciona bien, aunque me pongo a revisarlo (porque el
+    índice de mortandad de los ratones es demasiado elevado ☹ ¡No
+    deberían morirse tan seguido!)
+  - Me parece que cayeron en /sobre-ingeniería/ para su proyecto
+    - Tiene tal vez /demasiadas/ construcciones de sincronización,
+      algunas de ellas duplicando su propósito:
+      #+begin_src python
+	mutex = threading.Semaphore(1) # Protege a la variable ratones
+	mutex2 = threading.Semaphore(1) # Protege a la variable gatos
+	mutex_muerte = threading.Semaphore(0) # Permite a los ratones valientes morir :c
+
+	# (...)
+	def raton(id):
+	    # (...)
+	    mutex2.acquire()
+	    if gatos > 0 :
+		mutex_muerte.acquire()
+		muerte(id)
+		mutex_muerte.release()
+		mutex2.release()
+		multiplex_platos.release()
+		return
+	    mutex2.release()
+	    # (...)
+
+	# (...)
+	def muerte(id):
+	    global ratones
+	    print("Un gato mató al ratoncito", id,":(")
+	    mutex.acquire()
+	    ratones = ratones - 1
+	    if ratones == 0:
+		cuarto_con_ratones.release()
+	    mutex.release()
+      #+end_src
+      Siempre que modifican =ratones= lo hacen protegiéndolo con
+      =mutex= ⇒ Me parece que =mutex_muerte= es innecesario.
+    - ... Y no termino de entender por qué en =comeGato()= liberan y
+      adquieren a =mutex_muerte=, en una suerte de /anti-mutex/ (¿?)
+  - Me llama la atención que el que verifica /si debe ser comido/ es
+    =raton()=, no es =gato()= el que revisa si hay algún =raton()=
+    para comérselo.
+    - Está bien, se ajusta a las especificaciones del programa... Pero
+      en general, para los programas que desarrollen, ¡procuren que
+      quien emprenda las acciones sea el actor definido! (o empleen
+      /representantes/proxies/ para tal fin). Esto por claridad y
+      mantenibilidad del código.
+- Calificación :: 9
+
