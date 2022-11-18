@@ -11,11 +11,15 @@
   como lo refleja la rúbrica, obtiene una calificación un poco más alta)
   el que ustedes me planteen los temas de su interés.
 
-  |------------+-------------------------------------+-------------------+-----------------------------------------------------+-----------+-------------------|
-  |      Fecha | Tema                                | Integrantes       | Documentos                                          | Preguntas | Evaluación        |
-  |------------+-------------------------------------+-------------------+-----------------------------------------------------+-----------+-------------------|
-  | 2022.11.08 | Comparación de Windows 10 vs. Linux | Héctor Barriguete | [[./BarrigueteHector/presentacion.pdf][Documento de texto (presentacion.pdf)]], [[./BarrigueteHector/comparacion windows linux.pdf][Presentación]] |           | [[./BarrigueteHector/evaluacion.org][Evaluación global]] |
-  |------------+-------------------------------------+-------------------+-----------------------------------------------------+-----------+-------------------|
+  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-----------+-------------------|
+  |      Fecha | Tema                                                     | Integrantes                   | Documentos                                          | Preguntas | Evaluación        |
+  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-----------+-------------------|
+  | 2022.11.08 | Comparación de Windows 10 vs. Linux                      | Héctor Barriguete             | [[./BarrigueteHector/presentacion.pdf][Documento de texto (presentacion.pdf)]], [[./BarrigueteHector/comparacion windows linux.pdf][Presentación]] |           | [[./BarrigueteHector/evaluacion.org][Evaluación global]] |
+  | 2022.11.24 | Videojuegos en Linux (Wine)                              | Esteban Tafolla y María Muñoz |                                                     |           |                   |
+  |            | Emuladores                                               | Jesús Fajardo                 |                                                     |           |                   |
+  |            | Completely Fair Scheduler / Retroalimentación Multinivel | Mauricio Pérez                |                                                     |           |                   |
+  | 2022.11.29 | Ejemplos de uso "interesante" de archivos                | Carlos de la Cruz             |                                                     |           |                   |
+  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-----------+-------------------|
   #+TBLFM: 
 
 * Rúbrica de evaluación
