@@ -18,7 +18,10 @@
   | 2022.11.29 | Ejemplos de uso "interesante" de archivos                | Carlos de la Cruz             |                                                     |           |                   |
   | 2022.12.01 | Videojuegos en Linux (Wine)                              | Esteban Tafolla y María Muñoz |                                                     |           |                   |
   | 2022.12.06 | Completely Fair Scheduler / Retroalimentación Multinivel | Mauricio Pérez                |                                                     |           |                   |
-  |            | Emuladores                                               | Jesús Fajardo                 |                                                     |           |                   |  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-----------+-------------------|
+  | 2022.12.08 | Administración de procesos en Android                    | Ana Camacho                   |                                                     |           |                   |
+  | 2022.12.13 | Emuladores                                               | Jesús Fajardo                 |                                                     |           |                   |
+  | 2022.12.15 | Funcionamiento de los antivirus                          | Erick Jair Méndez             |                                                     |           |                   |
+  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-----------+-------------------|
   #+TBLFM: 
 
 * Rúbrica de evaluación
