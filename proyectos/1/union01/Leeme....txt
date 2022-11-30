@@ -1,0 +1,17 @@
+Para usar los simuladores:
+
+1.- Abrir el archivo union3.swf en el navegador de Internet este es el menu principal
+
+2.- Se tienen 3 simuladores para interactuar (3 tipos de circuito):
+ - circuito con Dos focos con dos resistencias (en paralelo)
+ - circuito con Tres fuentes y cinco resistencias
+ - circuito con Dos focos con tres resistencias (en paralelo) 
+
+3.- Cada circuito tiene sus instrucciones particulares en la caja superior.
+
+Elaborado por: Juan Salvador Flores Alarcón.
+Con la supervisión de: Ing. Francisco Miguel Pérez Ramírez [fcom1216@gmail.com]
+(c) Departamento de Electricidad y Magnetismo. FI. UNAM.
+2009
+
+http://dcb.fi-c.unam.mx/CoordinacionesAcademicas/FisicaQuimica/ElectricidadMagnetismo/t_sims.html
