@@ -1,4 +1,4 @@
-#**El Pumacafé**
+# **El Pumacafé**
 
 Los estudiantes Diego y Abigail necesitan dinero para continuar con sus proyectos de la carrera. 
 Así que ambos deciden poner una cafetería, al no poder contratar más personas ellos serán los dos meseros. 
@@ -12,7 +12,7 @@ Queremos evitar que un mesero tome una nueva orden sin preparar la anterior. O q
 No necesitamos el ordenamiento relativo en la salida de clientes mientras no esté en su máxima capacidad la cafetería. 
 Mientras sean clientes diferentes pueden pedir y beber sus bebidas sin necesidad de ordenamiento.
 
-##**Reglas**
+## **Reglas**
 - Hay 2 meseros.
 
 - El café puede albergar 10 clientes máx.
@@ -27,31 +27,34 @@ Mientras sean clientes diferentes pueden pedir y beber sus bebidas sin necesidad
 
 - El cliente debe tomar su bebida en 10 segundos.
 
-##**Implementación**
+## **Implementación**
 Creamos un código en lenguaje python llamado proyectoSO.py . Nuestros puntos de sincronización son *creación de hilos, filtro y ordenar*.
 
-###*Creación de hilos*
+### *Creación de hilos*
 Creamos los hilos cliente y empleado. Procedemos a ejecutar el hilo de los meseros y hasta que dejen de venir 
 clientes seguirán ejecutándose los hilos empleado y cliente.
+
 ![CreaHilos](https://user-images.githubusercontent.com/38671407/204729271-0bc70803-8380-4154-a859-0536e142d5b3.PNG)
 
-###*Filtro*
+### *Filtro*
 Dentro de la creación de nuestro hilo cliente haremos nos cuente los clientes para mantener 
 un control de los mismos y que no entren muchos si nuestro mesero está ocupado.
+
 ![Filtro](https://user-images.githubusercontent.com/38671407/204729410-70a285a0-ec27-4fe5-b463-faae5729eb19.PNG)
 
-###*Ordenar*
+### *Ordenar*
 Definimos pedir para determinar cómo se comportan nuestros clientes. Aquí vemos que en ciertas acciones debe esperar al mesero para pasar a la siguiente.
+
 ![Ordena](https://user-images.githubusercontent.com/38671407/204729571-f45f3dd2-db16-46e6-ba0f-e9cf5024b21b.PNG)
 
-##**Descripción del entorno de desarrollo**
+## **Descripción del entorno de desarrollo**
 Utilizamos python versión 3.9.
 
 Usamos las bibliotecas threading, time y random.
 
 Lo desarrollamos en Visual Studio Code, para probarlo usamos la terminal del mismo. Nos enviamos el código cuando actualizamos algo en el.
 
-##**Ejemplos de ejecución**
+## **Ejemplos de ejecución**
 ![Captura](https://user-images.githubusercontent.com/38671407/204729938-7c30f4a0-78a5-459e-a207-ae5def459c96.PNG)
 ![Captura1](https://user-images.githubusercontent.com/38671407/204729941-b423bf52-0e89-4a0c-95ef-b94a36ac0363.PNG)
 ![Captura2](https://user-images.githubusercontent.com/38671407/204729944-927f7c65-68f5-4d03-b3de-1c126886ecd6.PNG)
