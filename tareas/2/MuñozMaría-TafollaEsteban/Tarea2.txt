@@ -1,0 +1,21 @@
+-Muñoz Tamés María Ángel
+-Tafolla Rosales Esteban
+
+Problema a resolver : Gatos y ratones
+
+Planteamiento:
+Tengo k gatos (y desafortunadamente, l ratones) en su casa.
+Le sirvo la comida a mis gatos en m platos.
+Gatos y ratones han llegado a un acuerdo para repartirse el tiempo
+y comida — Pero tienen que convencerme de que están haciendo
+su trabajo.
+
+Para la solución de este problema hicimos uso de python3. Es necesario tener instalado Python además de descargar el archivo "gatos_ratones.py" ubicado en el repositorio. Dentro del directorio en el cual se ubica el archivo .py ejecutar el comando "python3 gatos_ratones.py"   
+
+
+Los patrones basados en semáforos utilizada para resolver el problema fueron
+    -Mutex
+    -Multiplex
+    -Torniquete
+    
+Nuestra duda está relacionada con el número de platos creados para comer. Ya que dentro del programa observamos que el número de platos en los cuales pueden comer gatos y ratones es uno menos del asignado. Creemos que esto es causado porque llegan un gato a esperar a que los ratones terminen de comer pero no lo tenemos del todo claro.

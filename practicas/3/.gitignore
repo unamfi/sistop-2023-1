@@ -1,7 +1,0 @@
-#archivo gitignore, intento 2
-*.log
-*.out
-build/
-dist/
-nbproject/
-

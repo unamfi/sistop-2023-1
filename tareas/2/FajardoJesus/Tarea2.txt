@@ -1,0 +1,11 @@
+Fajardo Suárez Jesús Miguel - Sistemas Operativos
+
+Problema a realizar: El cruce del río
+
+El programa se realizó en Python, con correr el programa es suficiente, pero en el código se puede aumentar el ciclo for que crea los hilos para que suban más pasajeros.
+
+Para este programa se utilizó un mutex y un multimplex. El mutex simplemente funciona de forma que da un orden, limitando la entrada de los hilos de uno en uno para evitar modificaciones a índices que afecten el procedimiento.
+Luego el multiplex implementado fue para limitar que realmente solo entraran 4 hilos y así evitar que el barco se hundiera. Si bien las condicionales no lo deberían permitir, con este multiplex se aumenta la seguridad.
+
+Finalmente intenté implementar un patrón de barrera para que con este se pudiera realizar el viaje una vez se subieran 4 personas, pero no lo implementaba correctamente lo que mandaba errores o malas salidas, por lo que mantuve la versión aburrida de una simple condicional.  También quiero aclarar que use del vacío legal donde no se menciona que, si alguien por cuestión de cupo y el tipo de desarrollador que es no puede subir al bote, espera en la fila hasta que pueda subir, aunque es algo que me hubiera haber podido implementar para dar más complejidad al problema. (en este caso quien reciba el mensaje de “Evitemos problemas”). 
+
