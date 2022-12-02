@@ -1,23 +1,25 @@
-
-
-
 import threading 
 import sys
 import random
 import time
 
-#Parentesco
-#diccionario
-#mutexfamiliar=Empleado
-#familiarDisponible
-#coronaviroso
-#personas=EmpleadosN
+##Funciones para imprimir mensajes en diferentes colores: Rojo cuando el amigo se enoja y logran que regrese, 
+#Verde  para saber quienes estan disponibles, rosa informa en que tarea se encuentra
 
-## Lista de parentescos y diccionario que nos permite identificar 
+def print_fail(message, end = '\n'):
+    sys.stderr.write('\x1b[1;34m' + message.strip() + '\x1b[0m' + end)
+
+def print_pass(message, end = '\n'):
+    sys.stdout.write('\x1b[1;32m' + message.strip() + '\x1b[0m' + end)
+
+def print_info(message, end = '\n'):
+    sys.stdout.write('\x1b[1;35m' + message.strip() + '\x1b[0m' + end)
+
+## Lista de empleados y diccionario que nos permite identificar 
 empleados = ['Chef','Pastelero','Bartneder','Mesero','Cajero','Recepcionista','Seguridad']
 Diccionario = {1:['Limpiar la mesa','Lavar el baño','Trapear','Barrer'],
-                     2:['Lavar baño','Sacar basura'],
-                     3:['Ordenar la bodega']}
+               2:['Lavar baño','Sacar basura'],
+               3:['Ordenar la bodega']}
 
 ##Mutex para tenerlos en las clases tarea, persona y Casa
 mutexTarea = threading.Semaphore(1)
@@ -25,7 +27,7 @@ mutexEmpleado = threading.Semaphore(1)
 empleadoDisponible =[]
 listaDeTareas =[]
 
-#Este número de personas se cambia cuando el usuario lo registra
+#El numero va cambiando
 cantidad_empleados = 5
 tareasdelDia = 5
 
@@ -33,10 +35,10 @@ tareasdelDia = 5
 tareas = threading.Semaphore(tareasdelDia)
 empleadosN = threading.Semaphore(cantidad_empleados)
 
-#CeutnaListos para la barrera
+#CuentaListos para la barrera
 cuentaListos = 0
 
-#Mutex para la barrera y mutex de coronaviroso
+
 mutexListos = threading.Semaphore(1)
 barreraListos = threading.Semaphore(0)
 desertor = threading.Semaphore(1)
@@ -55,8 +57,6 @@ class Tarea:
         mutexTarea.acquire()
         if cuentaListos == cantidad_empleados:
                 barreraListos.release()
-
-        ##Detalle: Se quería inicialmente sacar todas las tareas a la vez, tal vez tener una tercera clase
         listaDeTareas.pop(0)
         self.realizarse(self.numero,self.nombreTarea,self.requeridosParaUnaTarea)
         #Sacamos una por una las tareas en el orden en que llegaron a listaDeTareas.append(threading.Thread(target = Tarea, args= [y, requeridosParalaTarea,nombreTarea]).start())
@@ -67,7 +67,8 @@ class Tarea:
         requeridos = []
         for i in range(requeridosParalaTarea):
             empleadosN.acquire()
-            mutexEmpleado.acquire()## Sacamos algunos de los familiares requeridos que estén disponibles para hacer la tarea
+            mutexEmpleado.acquire()
+            # Sacamos algunos de los empleados requeridos que estén disponibles para hacer la tarea
             requeridos.append(empleadoDisponible.pop(random.randrange(len(empleadoDisponible))))
             mutexEmpleado.release()
             mutexEmpleado.acquire()
@@ -75,13 +76,15 @@ class Tarea:
         for i in requeridos: ## A éstos los ponemos a trabajar
             i.Trabajar(nombreTarea)
         while True:
-            if all(elem in empleadoDisponible for elem in requeridos): ##Hasta que todos hayan terminado la tarea, se dará por concluída la tarea y quitamos la barrera
+            if all(elem in empleadoDisponible for elem in requeridos): 
+                ##Hasta que todos hayan terminado la tarea, se dará por concluída la tarea y quitamos la barrera
                 print('\n\t',requeridosParalaTarea,'ha(n) terminado la tarea:',nombreTarea,'\n')
                 self.barrera.release()
                 self.barrera.acquire()
                 self.barrera.release()
                 break
-        for i in range(requeridosParalaTarea): ##Liberamos los mutex para evitar que se usen más de las personas necesarias
+        for i in range(requeridosParalaTarea): 
+            #Liberamos los mutex para evitar que se usen más de las personas necesarias
             empleadosN.release()
 
 class Persona:
@@ -93,11 +96,10 @@ class Persona:
 
     def entrarDisponible(self,nombreTarea):
         global cuentaListos,barreraListos,mutexListos
-        if nombreTarea == 'vacio': ## la primera vez lo cachamos para v
+        if nombreTarea == 'vacio': 
             mutexEmpleado.acquire()
-
             cuentaListos = cuentaListos + 1
-            print(str(self.empleados)+str(self.numero)+' "Preparado para limpiar"')
+            print_pass(str(self.empleados)+str(self.numero)+' "preparado para limpiar"')
             mutexEmpleado.release()
             mutexEmpleado.acquire()# Para que pase uno por uno
             mutexEmpleado.release()
@@ -109,14 +111,14 @@ class Persona:
         else:
             mutexEmpleado.acquire()
             if random.random() < 0.1: # Si llega un 
-                print(self.empleados+str(self.numero)+" ¡¡Me voy!! ")
+                print_fail(self.empleados+str(self.numero)+" ¡¡Me voy!! ")
                 print("\n")
                 print("     !!! INTERVENCION !!!     ")
                 print("\n")
                 desertor.acquire()
-                time.sleep(0.5)# Si hay alguien con coronavirus paramos todo
+                time.sleep(0.5)# Si hay alguien enojado paramos todo
                 desertor.release()
-                print(self.empleados+str(self.numero)+" ¡Nunca me fui! ")
+                print_fail(self.empleados+str(self.numero)+" ¡Nunca me fui! ")
                 empleadoDisponible.append(self)
                 mutexEmpleado.release()
             else:
@@ -126,18 +128,18 @@ class Persona:
     def Trabajar(self,nombreTarea):
         global mutexTarea, empleadoDisponible 
         self.descanso.release()## Lo sacamos del descanso
-        print(self.empleados+str(self.numero)+" está trabajando en "+nombreTarea)
+        print_info(self.empleados+str(self.numero)+" está trabajando en "+nombreTarea)
         time.sleep(random.random()) ## Tiempo en que tarda hacer una tarea una persona
         print(self.empleados,self.numero,'dejó de trabajar en',nombreTarea)
         self.entrarDisponible(nombreTarea)
 
 
 
-class Casa:
+class restaurante:
     def __init__(self, cantidad_empleados, tareasdelDia):
         global listaDeTareas, empleadoDisponible 
         for x in range(cantidad_empleados):
-            ## Lanzamos todos los hilos de personas para que se enlisten a personas listas, con random hacemos que sean aleatorios sus parentescos
+            ## Lanzamos todos los hilos de personas para que se enlisten a personas listas, con random hacemos que sean aleatorios los empleados
             threading.Thread(target = Persona, args=[x,empleados[random.randrange(7)]]).start()
         
         for y in range(tareasdelDia):
@@ -152,16 +154,6 @@ class Casa:
             mutexTarea.release()
 
 
-##Funciones para imprimir con diferente formarto: Rojo fail, Verde pass, Info azul, amarillo warn y para hacer un banner sencillo
-
-#def banner(texto, ch='=', length=78):
-#    textoEspaciado = ' %s ' % texto
-#    banner = textoEspaciado.center(length, ch)
-#    return banner
-
-
-
-
 if __name__ == '__main__':
     print("\n")
     print("Estamos preparados para limpiar")
@@ -169,4 +161,4 @@ if __name__ == '__main__':
     print("\n")
     cantidad_empleados = int(input("¿Cuántos amigos disponibles para limpiar?: "))
     tareasdelDia = int(input("¿Cuantas tareas realizaremos tenemos hoy?: "))
-    friends = Casa(cantidad_empleados,tareasdelDia)
+    friends = restaurante(cantidad_empleados,tareasdelDia)
