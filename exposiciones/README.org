@@ -11,17 +11,17 @@
   como lo refleja la rúbrica, obtiene una calificación un poco más alta)
   el que ustedes me planteen los temas de su interés.
 
-  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-------------------------------------------------|
-  |      Fecha | Tema                                                     | Integrantes                   | Documentos                                          | Evaluación                                      |
-  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-------------------------------------------------|
-  | 2022.11.08 | Comparación de Windows 10 vs. Linux                      | Héctor Barriguete             | [[./BarrigueteHector/presentacion.pdf][Documento de texto (presentacion.pdf)]], [[./BarrigueteHector/comparacion windows linux.pdf][Presentación]] | [[./BarrigueteHector/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./BarrigueteHector/evaluacion.org][Evaluación global]] |
-  | 2022.11.29 | Ejemplos de uso "interesante" de archivos                | Carlos de la Cruz             |                                                     | [[./DeLaCruzLopezCarlosOdette/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./DeLaCruzLopezCarlosOdette/evaluacion.org][Evaluación global]] |
-  | 2022.12.01 | Videojuegos en Linux (Wine)                              | Esteban Tafolla y María Muñoz | [[./MuñozMaría-TafollaEsteban/presentacion.pdf][Presentación (PDF)]]                                  | [[./MuñozMaría-TafollaEsteban/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./MuñozMaría-TafollaEsteban/evaluacion.org][Evaluación global]] |
-  | 2022.12.06 | Completely Fair Scheduler / Retroalimentación Multinivel | Mauricio Pérez                |                                                     |                                                 |
-  | 2022.12.08 | Administración de procesos en Android                    | Ana Camacho                   |                                                     |                                                 |
-  | 2022.12.13 | Emuladores                                               | Jesús Fajardo                 |                                                     |                                                 |
-  | 2022.12.15 | Funcionamiento de los antivirus                          | Erick Jair Méndez             |                                                     |                                                 |
-  |------------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------+-------------------------------------------------|
+  |------------+----------------------------------------------------------+-------------------------------+----------------------------------------+-------------------------------------------------|
+  |      Fecha | Tema                                                     | Integrantes                   | Documentos                             | Evaluación                                      |
+  |------------+----------------------------------------------------------+-------------------------------+----------------------------------------+-------------------------------------------------|
+  | 2022.11.08 | Comparación de Windows 10 vs. Linux                      | Héctor Barriguete             | [[./BarrigueteHector/presentacion.pdf][Documento de texto]], [[./BarrigueteHector/comparacion windows linux.pdf][Presentación]]       | [[./BarrigueteHector/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./BarrigueteHector/evaluacion.org][Evaluación global]] |
+  | 2022.11.29 | Ejemplos de uso "interesante" de archivos                | Carlos de la Cruz             |                                        | [[./DeLaCruzLopezCarlosOdette/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./DeLaCruzLopezCarlosOdette/evaluacion.org][Evaluación global]] |
+  | 2022.12.01 | Videojuegos en Linux (Wine)                              | Esteban Tafolla y María Muñoz | [[./MuñozMaría-TafollaEsteban/Investigacion_Capas_compatibilidad.pdf][Documento de texto]], [[./MuñozMaría-TafollaEsteban/presentacion.pdf][Presentación (PDF)]] | [[./MuñozMaría-TafollaEsteban/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./MuñozMaría-TafollaEsteban/evaluacion.org][Evaluación global]] |
+  | 2022.12.06 | Completely Fair Scheduler / Retroalimentación Multinivel | Mauricio Pérez                |                                        |                                                 |
+  | 2022.12.08 | Administración de procesos en Android                    | Ana Camacho                   |                                        |                                                 |
+  | 2022.12.13 | Emuladores                                               | Jesús Fajardo                 |                                        |                                                 |
+  | 2022.12.15 | Funcionamiento de los antivirus                          | Erick Jair Méndez             |                                        |                                                 |
+  |------------+----------------------------------------------------------+-------------------------------+----------------------------------------+-------------------------------------------------|
   #+TBLFM: 
 
 * Rúbrica de evaluación
