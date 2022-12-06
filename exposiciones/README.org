@@ -21,6 +21,7 @@
   | 2022.12.13 | Administración de procesos en Android                    | Ana Camacho                         |                                              |                                                 |
   | 2022.12.13 | Emuladores                                               | Jesús Fajardo                       |                                              |                                                 |
   | 2022.12.15 | Funcionamiento de los antivirus                          | Erick Jair Méndez y Carla Rodríguez |                                              |                                                 |
+  | 2023.01.05 | WSL - Windows Subsystem for Linux                        | Alan Méndez                   |                                              |                                                 |
   |------------+----------------------------------------------------------+-------------------------------------+----------------------------------------------+-------------------------------------------------|
   #+TBLFM: 
 
