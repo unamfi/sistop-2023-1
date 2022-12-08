@@ -55,14 +55,14 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
     =210, 2, 150, 7= (porque =((7 * 256 + 150) * 256 + 2) * 256 + 210
     = 1234567890=.
   - Para hacer las conversiones desde o hacia este formato, les
-    sugiero usar el formato =<L= con las funciones =pack()= y
+    sugiero usar el formato =<I= con las funciones =pack()= y
     =unpack()=, disponibles en distintos lenguajes ([[https://docs.python.org/3/library/struct.html][Python:
     struct.pack()]], [[https://ruby-doc.com/core/Array.html#method-i-pack][Ruby: Array#pack()]], [[https://perldoc.perl.org/perlpacktut][Perl: pack()]], [[https://www.php.net/manual/en/function.pack.php][PHP: pack()]], hay
     varias biblitecas que pueden usar para Javascript, como
     [[https://github.com/pgriess/node-jspack][node-jspack]] o [[https://github.com/ryanrolds/bufferpack][bufferpack]]). Si van a usar C o C++, les sugiero
-    revisar las funciones [[https://linux.die.net/man/3/htons][htonl() y ntohl()]]. ¿Java? Si bien no forman
+    revisar las funciones [[https://linux.die.net/man/3/htons][htons() y ntohs()]]. ¿Java? Si bien no forman
     parte del lenguaje, pueden encontrar [[https://stackoverflow.com/questions/2675957/java-implementing-htonl#15547976][varias]] [[https://coderanch.com/t/366549/java/Java-equivilent-functions-htonl-ntohl][implementaciones]] de
-    =htonl()= y =ntohl()= en la red.
+    =htons()= y =ntohs()= en la red.
 - La superficie del disco se divide en sectores de 256 bytes. Cada
   cluster mide cuatro sectores.
 - El pseudodispositivo no maneja /tabla de particiones/, hospeda
@@ -74,12 +74,13 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
   - 0--8 :: Para identificación, el nombre del sistema de
             archivos. ¡Debes validar nunca modificar un sistema de
             archivos que no sea el correcto! Debe ser la cadena =FiUnamFS=.
-  - 10--13 :: Versión de la implementación. Estamos implementando la
-    versión =23.1=. Deben validar que el sistema de archivos a
-    utilizar sea de esta versión, para evitar la corrupción de datos.
+  - 10--14 :: Versión de la implementación. Estamos implementando la
+    versión =23.1= (como cadena, no como número). Deben validar que el
+    sistema de archivos a utilizar sea de esta versión, para evitar la
+    corrupción de datos.
   - 20--35 :: Etiqueta del volumen
-  - 40--43 :: Tamaño del cluster en bytes
-  - 44--47 :: Número de clusters que mide el directorio
+  - 40--44 :: Tamaño del cluster en bytes
+  - 45--49 :: Número de clusters que mide el directorio
   - 48--51 :: Número de clusters que mide la unidad completa
   El resto del superbloque puede quedar vacío (o puedes
   /sobrecargarlo/ con otros datos  — No es importante para la
@@ -95,10 +96,10 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
   - 16--20 :: Tamaño del archivo, en bytes
   - 20--23 :: Cluster inicial
   - 24--37 :: Hora y fecha de creación del archivo, especificando
-              AAAAMMDDHHMMSS (p.ej. '20220508182600' para 2022-05-08
+              AAAAMMDDHHMMSS (p.ej. '20221108182600' para 2022-11-08
 	      18:26:00)
   - 38-51 :: Hora y fecha de última modificación del archivo,
-              especificando AAAAMMDDHHMMSS (p.ej. '20220509182600')
+              especificando AAAAMMDDHHMMSS (p.ej. '20221109182600')
   - 52--64 :: Espacio no utilizado (¿reservado para expansión futura?)
 - Las entradas no utilizadas del directorio se identifican porque
   en el campo de nombre llevan la cadena =---------------=.
