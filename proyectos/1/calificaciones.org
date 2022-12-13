@@ -1,0 +1,652 @@
+** Hector Barriguete
+- Título :: Blackjack
+- Documentación :: [[./BarrigueteHector/commits][commits]], [[./BarrigueteHector/Proyecto#1_BarrigueteRodriguez.pdf][Proyecto#1_BarrigueteRodriguez.pdf]]
+- Archivos :: [[./BarrigueteHector/proyectoUno.py][proyectoUno.py]]
+- Interfaz :: Bitácora de ejecución impresa a terminal
+- Uso de sincronización :: Mutex protegiendo dos secciones críticas
+- Comentarios ::
+  - Revisé el [[https://github.com/BarrigueteHector/Proyecto-1-Sistemas-Operativos][otro repositorio]] que mencionaste. Claro — los /commits/
+    son la historia del desarrollo de tu proyecto; para que entraran,
+    tendrías que haber comenzado el desarrollo /desde dentro del
+    directorio/ del repositorio, no en un espacio nuevo. Lo doy por
+    bueno 😉
+  - Si bien el problema que describes sí requiere de sincronización
+    (pues todos los hilos modifican eventualmente el arreglo indicando
+    sus respectivos estados), la complejidad que representa la
+    sincronización (dentro de la innegable complejidad de tu
+    implementación del juego) es muy superficial 🙁
+  - Respecto al estilo de comentarios: Es mucho más legible y habitual
+    describir lo que vas a hacer /previo a su implementación/. Por
+    ejemplo, en vez de:
+    #+begin_src python
+      pedir_carta = True #Variable para saber si el jugador pide otra carta o se planta
+      pedir_carta_crupier = True #Variable para saber si el Crupier pide otra carta o se planta
+
+      carta_repetida = False #Variable para saber si la carta ya fue repartida (jugada 2 veces)
+
+      diferencia = 0 #Diferencia entre 21 y el puntaje del jugador
+      decision = 0 #Decision aleatoria para saber si el jugador pide otra carta o se planta, 
+    #+end_src
+    resultaría más legible:
+    #+begin_src python
+      # ¿El jugador pide otra carta, o se planta? (booleano)
+      pedir_carta = True
+      # ¿El croupier pide otra carta, o se planta? (booleano)
+      pedir_carta_crupier = True
+
+      # ¿Ya fue repartida esta carta? (booleano)
+      carta_repetida = False
+
+      # Diferencia entre 21 y el puntaje del jugador
+      diferencia = 0
+      # Decision aleatoria para saber si el jugador pide otra carta o se planta,
+      decision = 0
+    #+end_src
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       1. |
+| Cumplimiento           |         5 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.33 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.35 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Mauricio Blancas, Dulce Hernandez
+- Título :: Restaurante con problemas en la división de tareas
+- Documentación :: [[./BlancasMauricio-HernandezDulce/README.md][README.md]]
+- Archivos :: [[./BlancasMauricio-HernandezDulce/proyecto.py][proyecto.py]]
+- Interfaz :: Bitácora de ejecución impresa a terminal (colores /
+  indentación por tipo de mensaje)
+- Uso de sincronización :: Barrera para dar inicio a la actividad,
+  serializar las actividades que se reportan
+- Comentarios ::
+  - ¡Uy! ¿Python 2.x? ¡Esa rama fue declarada obsoleta hace varios
+    años! La compatibilidad con Python 3.x, la rama actual, tiene
+    problemas graves (por decirlo suavecito)... Eviten Python 2.x, les
+    va a traer problemas.
+    - Es habitual que puedan tener instaladas ambas versiones de
+      Python (2 y 3) a la vez... por eso ven que yo escribo siempre
+      explícitamente "python3".
+    - De hecho, el código que escribieron _es_ Python3;
+      afortunadamente usaron la sintaxis nueva.
+  - Hay un pequeño problema lógico, que se presenta cuando hay pocos
+    empleados registrados (me ha pasado /siempre/ con 0 o 1 amigos, y
+    /ocasionalmente/ con 2). En la línea 72:
+    #+begin_src python
+      requeridos.append(empleadoDisponible.pop(random.randrange(len(empleadoDisponible))))
+    #+end_src
+    Si =empleadoDisponible= está vacío, al obtener
+    =len(empleadoDisponible=) obtenemos =0=, y =random.randrange(0)=
+    causa:
+    #+begin_src python
+      Exception in thread Thread-8 (Tarea):
+      Traceback (most recent call last):
+	File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+	  self.run()
+	File "/usr/lib/python3.10/threading.py", line 953, in run
+	  self._target(*self._args, **self._kwargs)
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/1/BlancasMauricio-HernandezDulce/proyecto.py", line 52, in __init__
+	  self.identificarTarea()
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/1/BlancasMauricio-HernandezDulce/proyecto.py", line 61, in identificarTarea
+	  self.realizarse(self.numero,self.nombreTarea,self.requeridosParaUnaTarea)
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/1/BlancasMauricio-HernandezDulce/proyecto.py", line 72, in realizarse
+	  requeridos.append(empleadoDisponible.pop(random.randrange(len(empleadoDisponible))))
+	File "/usr/lib/python3.10/random.py", line 321, in randrange
+	  raise ValueError("empty range for randrange()")
+      ValueError: empty range for randrange()
+    #+end_src
+  - En varias ocasiones usan una construcción que parece torniquete
+    para "imponer un ritmo":
+    #+begin_src python
+      mutexEmpleado.release()
+      mutexEmpleado.acquire()
+      mutexEmpleado.release()
+    #+end_src
+    No les recomiendo poner torniquetes "nomás porque sí"; casi
+    siempre deberían ir apareados de una condición que los abra o
+    cierra cuando es requerido — ¡Y más raro aún me parece cuando lo
+    hacen con la =barreraListos=!
+  - No entiendo la lógica de la ``intervención''.  ¿Se supone que
+    deberían todos parar lo que están haciendo? Pueden
+    verificarlo... No lo hacen, sólo el ``desertor'' detiene su
+    trabajo por 0.5 segundos y vuelve a trabajar
+    - El mutex =desertor= sólo se utiliza en este punto, y el hilo que
+      lo verifica es únicamente el desertor). Lo único que este código
+      evitaría es que dos desertores estuvieran en su medio segundo de
+      /berrinche/ al mismo tiempo.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.84 |
+| Documentación expresa  |       7.5 |        |     0.50 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.67 |
+| Historial en Git       |       7.5 |        |     0.50 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.43 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+** Carlos Odette de la Cruz
+- Título :: Videojuego multijugador
+- Documentación :: [[./DeLaCruzLopezCarlosOdette/documentacion_proyectoFinal_DeLaCruzLopezCarlosOdette.pdf][documentacion_proyectoFinal_DeLaCruzLopezCarlosOdette.pdf]]
+- Archivos :: [[./DeLaCruzLopezCarlosOdette/proyectoFinal_DeLaCruzLopezCarlosOdette.py][proyectoFinal_DeLaCruzLopezCarlosOdette.py]]
+- Interfaz :: Conversacional / Línea de comando
+- Uso de sincronización :: Varios multiplex para determinar el tamaño
+  máximo de diversas estructuras. Mutex para que todos los mensajes
+  enviados a pantalla presenten sus líneas sin ser interrumpidos.
+- Comentarios ::
+  - La documentación es ilegible. El alumno me confirmó que la hizo
+    por dictado — pero no puedo considerarla, porque es imposible de
+    entender.
+  - Me parece que el uso de =mensajesConsola= resulta muchas veces
+    innecesario — aunque nunca dañino. Sin embargo, para usarlo con
+    esta frecuencia, me parecería que sería mucho más claro con la
+    sintaxis que usa a =with=:
+    #+begin_src python
+      # En vez de lo siguiente:
+      mensajesConsola.acquire()
+      jugadoresPorPartida -= 1
+      print(f"Usuario: {jugadorIDWarzone} Entrando a Warzone")
+      print(f"Disponibilidad para mas jugadores: {jugadoresPorPartida}")
+      mensajesConsola.release()
+
+      # Resultaría más claro tener:
+      with mensajesConsola:
+	  jugadoresPorPartida -= 1
+	  print(f"Usuario: {jugadorIDWarzone} Entrando a Warzone")
+	  print(f"Disponibilidad para mas jugadores: {jugadoresPorPartida}")
+    #+end_src
+  - El programa /vuelca/ demasiada información a pantalla como para
+    poder seguir bien a bien lo que ocurre y descifrar desde ahí su
+    lógica ☹
+  - Las funciones son demasiado largas para comprender su
+    funcionamiento fácilmente a un sólo vistazo. Evita desarrollar
+    funciones de más de unas 30 líneas; si son necesarias (muchas
+    veces lo son), intenta "partir" su funcionalidad.
+  - Entiendo que es meramente una simulación de actividad, pero creo
+    que debería haber correspondencia entre dos hilos — si un hilo
+    gana en una pelea, que otro perdiera en la misma, ¿no?
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.33 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     0.67 |
+| Documentación expresa  |         0 |        |     0.00 |
+| Entorno y dependencias |         0 |        |     0.00 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.25 |
+| Estructura             |         5 |        |     0.50 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     6.09 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+** Jesus Fajardo
+- Título :: La banda de progresivo
+- Documentación :: [[./FajardoJesus/Proyecto1-Fajardo.pdf][Proyecto1-Fajardo.pdf]]
+- Archivos :: [[./FajardoJesus/Proyecto1-Fajardo.py][Proyecto1-Fajardo.py]]
+- Interfaz :: GUI con TkInter
+- Uso de sincronización :: Varios mutexes (=Lock()=) para indicar el
+  estado del sistema; tanto =Bajista()= como =Guitarrista()= consultan
+  al =Candado.locked()= para verificar el estado de su compañero
+- Comentarios ::
+  - Haces un uso inteligente de =Candado.locked()=; a pesar de que yo
+    les indiqué que era "mala educación" usar condicionales con
+    construcciones de sincronización.
+    - Tal vez habría resultado más /elegante/ usar variables de
+      condición para manejar la situación que describes
+  - Recuerda el principio /DRY/: /Don't Repeat Yourself/. Si al
+    presentar al =Bajista()= dices que /``Para el Bajista se omitiran
+    los comentarios ya que es exactamente el mismo/ /procedimiento que
+    el guitarrista solo que con sus respectivos dialogos''/, sería
+    mucho mejor parametrizar a =MusicoDeCuerdas(tipo)=, ya que si su
+    comportamiento es tan similar... Duplicar el código te puede
+    llevar a problemas de mantenimiento. ¡Y esperemos que la banda
+    aguante muchos años junta!
+    - Otra de DRY: Sugiero fuertemente que en vez de escribir ``en
+      duro'' el ciclo de afinación:
+      #+begin_src python
+	Afinador.acquire()
+	AccionGuitarra.set("Toma el afinador")
+	sleep(1)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 7")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 6")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 5")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 4")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 3")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 2")
+	sleep(2)
+	AccionGuitarra.set("Guitarrista: Afinando cuerda 1")
+	sleep(2)
+	AccionGuitarra.set("Termine de afinar, hora de tocar")
+	Afinador.release() #Se suelta el afinador 
+      #+end_src
+      uses un ciclo y seas más breve. Así además podrías usar este
+      mismo código para guitarra y bajo:
+      #+begin_src python
+	def MusicoDeCuerdas(tipo):
+	    if tipo == 'bajo':
+		musico = 'Bajista'
+		num_cuerdas = 5
+		accion_instr = AccionBajo
+	    elif tipo == 'guitarra':
+		musico = 'Guitarrista'
+		num_cuerdas = 7
+		accion_instr = AccionGuitarra
+	    # (...)
+	    Afinador.acquire
+	    accion_instr.set('Toma el afinador')
+	    sleep(1)
+	    for cuerda in range(num_cuerdas):
+		accion_instr.set('%s: Afinando cuerda %d' % (musico, cuerda))
+		sleep(2)
+	    Afinador.release()
+      #+end_src
+    - Oye, pero una pregunta... ¿No son /seis/ cuerdas para la
+      guitarra y /cuatro/ para el bajo? ¿O son /tan/ progresivos que
+      hasta eso aumentó? 😉
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.84 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.19 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Issac Guerrero
+- Título :: Concurrencia en la parrilla
+- Documentación :: [[./GuerreroIssac/documentacion.pdf][documentacion.pdf]], [[./GuerreroIssac/planteamiento.txt][planteamiento.txt]]
+- Archivos :: [[./GuerreroIssac/main.py][main.py]], [[./GuerreroIssac/menu.ui][menu.ui]]
+- Interfaz :: GUI con PyQt5
+- Uso de sincronización :: Un multiplex para representar a las
+  parrillas delanteras y uno para las traseras
+- Comentarios ::
+  - Tanto en =sarten()= como en =olla()= modificas a las variables
+    globales =sartenes=, =olla_delante= y =olla_atras= sin controlar
+    accesos concurrentes (sin usar mutex)
+  - El uso de tu botón =Update= me resultó complicado de
+    entender... hasta que vi qué es lo que hacía en el código
+    fuente. podrías haber generado un hilo que periódicamente
+    (digamos, cada segundo) reportara los cambios. Basta con modificar
+    tu constructor creando un hilo para =__updater()= y agregar la
+    siguiente función:
+    #+begin_src python
+      def __init__(self): #constructor
+	      super(MiApp, self).__init__()
+	      Thread(target=self.__updater).start()
+	      loadUi('menu.ui', self)
+
+      def __updater(self):
+	      while True:
+		      time.sleep(1)
+		      self.actualizar()
+    #+end_src
+
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       0. |
+| Cumplimiento           |           |        |     0.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.16 |
+| Creatividad            |       7.5 |        |     0.50 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.84 |
+| Documentación expresa  |       7.5 |        |     0.50 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.67 |
+| Historial en Git       |         5 |        |     0.33 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     6.67 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Bryan Mejia
+- Título :: Videojuegos multijugador
+- Documentación :: [[./MejiaBryan/Proyecto - Sincronizacion Bryan.pdf][Proyecto - Sincronizacion Bryan.pdf]]
+- Archivos :: [[./MejiaBryan/proyecto_1_sincronizacion.py][proyecto_1_sincronizacion.py]]
+- Interfaz :: Envía a consola bitácora de los movimientos; indica con
+  colores diferentes los tipos de mensaje. Presenta visalumente la
+  representación de la ``cancha del juego''.
+- Uso de sincronización :: Barrera para inicialización simultánea. Un
+  mutex por cada espacio en el juego. Mutex para proteger diversas
+  estructuras locales
+- Comentarios ::
+  - ¡Muy buena implementación!
+  - Se me ocurre que podría resultar más visual el reporte de estado
+    si cada jugador tuviera un color diferente, con lo que a cada
+    ``paso'' se mostrara con un color distinto.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.36 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Alan Eduardo Méndez
+- Título :: Restaurante con envío
+- Documentación :: [[./MendezAlan/proyecto01.pdf][proyecto01.pdf]]
+- Archivos :: [[./MendezAlan/proyecto01.py][proyecto01.py]]
+- Interfaz :: Conversacional / Línea de comando
+- Uso de sincronización :: Barrera para iniciar sincronizados. El
+  mutex =mutLlamada= es usado más que como mutex, como torniquete
+  (¿innecesarios?  =mutLlamada=)
+- Comentarios ::
+  - No verificas que el total de teléfonos sea menor o igual a
+    =maxLlamadas=. Creo yo que en vez de una barrera, tal vez habría
+    sido más sencillo y efectivo que usaras un multiplex.
+
+    Dejé tu código andando un rato, y me encontré con:
+
+    #+begin_src text
+      Líneas disponibles:  -8
+      Telefonos  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] ocupados  13
+      Esperando llamada
+
+      Preparando:  Una Hamburguesa
+      Va en camino el repartidor
+
+      Líneas disponibles:  -7
+      Telefonos  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] ocupados  12
+      Esperando llamada
+
+      Llamada entrante
+      Líneas disponibles:  -7
+      Telefonos  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] ocupados  12
+      Esperando llamada
+    #+end_src
+  - ¡Ojo! Usas el arreglo =telefonos= en varios lugares sin protegerlo
+    de acceso concurrente.
+  - Me parece que te hiciste un poco de /batidillo/ con los varios
+    mutexes que usas... y la cantidad de atenciones que realiza tu
+    restaurante es muy inferior a la de llamadas que recibe (en mi
+    caso, yo te diría que 5:1 al menos).
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |       7.5 |        |     0.50 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.67 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |      1.5 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     7.51 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Erick Méndez, Carla Rodriguez
+- Título :: Pizzería
+- Documentación :: [[./MéndezErick-RodriguezCarla/README.md][README.md]], [[./MéndezErick-RodriguezCarla/documentación.pdf][documentación.pdf]]
+- Archivos :: [[./MéndezErick-RodriguezCarla/pizzeria.py][pizzeria.py]]
+- Interfaz :: Bitácora de ejecución impresa a terminal
+- Uso de sincronización :: Barrera para asegurar que el repartidor
+  entregue las órdenes de 3 en 3. Señalización tras realizar acciones.
+- Comentarios ::
+  - Un poquito más sencillo de lo que yo esperaba, pero con
+    suficientes puntos de sincronización para que valga bien para el
+    ejercicio planteado. ¡Bien! 😃
+  - Convendría que "cacharan" (o al menos, documentaran) la
+    posibilidad de que el usuario especifique un número total de
+    órdenes no múltiplo de 3: El repartidor se queda esperando para
+    siempre a que lleguen las pizzas faltantes. Bastaría con enviar el
+    número de señales a =caja_Reparto=, y aguantar /un sólo viaje/ con
+    menos pizzas de las convenidas.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.33 |
+| Creatividad            |         5 |        |     0.33 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |       7.5 |        |     0.50 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.68 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Diego Monroy Salazar, Abigail Peñafiel Garcés
+- Título :: El Pumacafé
+- Documentación :: [[./MonroySalazarDiego-PeñafielGarcésAbigail/El pumacafé_Documentación.pdf][El pumacafé_Documentación.pdf]]
+- Archivos :: [[./MonroySalazarDiego-PeñafielGarcésAbigail/proyectoSO.py][proyectoSO.py]]
+- Interfaz :: Bitácora de ejecución impresa a terminal
+- Uso de sincronización ::
+- Comentarios ::
+  - Usaron =threading.Event()=, que yo no cubrí en clase. ¡Muy bien
+    por la iniciativa ! 😃
+    - No me gusta mucho =Event= porque sus resultados van sobre /todos
+      los hilos/ que estén esperando a su resultado. En el caso de su
+      programa (tanto por el =range(1)= al crear al =mesero()= como
+      por lo que menciona la documentación, me parece que lo
+      intentaron escribir para varios meseros, pero lo bajaron a uno
+      sólo porque los meseros hacían acciones repetidas, ¿me equivoco?
+    - Pero como sea, ¡buenísimo que usaran un construcción no vista en
+      clase!
+  - También, la documentación habla de 10 clientes máximo, pero la
+    implementación los serializa, atenidendo únicamente a uno por uno
+    🙁
+  - ¿Un mutex para la entrada (=entrada_mutex=) y otro para la salida
+    (=salida_mutex=)? A la entrada no incrementan =contador_personas=
+    (sólo se decrementa conforme estas van saliendo), pero si lo
+    hicieran, el acceso /no estaría protegido/
+    - Por ahora, claro... =contador_personas= resulta inútil 😉
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.67 |
+| Historial en Git       |         5 |        |     0.33 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.43 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** María Muñoz, Esteban Tafolla
+- Título :: El hospital
+- Documentación :: [[./MuñozMaría-TafollaEsteban/SO_Proyecto1.pdf][SO_Proyecto1.pdf]]
+- Archivos :: [[./MuñozMaría-TafollaEsteban/Hospital.py][Hospital.py]]
+- Interfaz :: GUI con TkInter; mensajes explicando los detalles de la situación a consola
+- Uso de sincronización :: Multiplex para el total de pacientes en el
+  sistema (en fila + en consultorios); varios mutexes protegiendo
+  actualizaciones concurrentes en diversas estructuras.
+- Comentarios ::
+  - ¡Muy buen desarrollo, felicidades!
+  - No mencionan en la documentación la clave de color del fondo de
+    los pacientes que establece =buscaImagen()=, creo que debería
+    documentarse para ayudar a entender el avance.
+  - Lograron una muy buena integración de la aplicación. Sin embargo,
+    por claridad, les recomiendo separar tanto como sea posible la
+    /lógica/ de las /acciones/, usando por ejemplo el patrón /MVC/
+    (Modelo-Vista-Controlador).
+    - Esto es, en vez de mezclar las acciones que sigue cada paciente
+      con la representación en el GUI, hacer que el objeto paciente
+      /envíe señales/ al GUI y éste haga las modificaciones a la
+      representación
+    - Eso permitiría mantenerse /DRY/ (/Don't Repeat Yourself/),
+      teniendo código con menos repetición, más fácil de desarrollar y
+      de mantener.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.69 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
