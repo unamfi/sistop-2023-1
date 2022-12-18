@@ -2,7 +2,7 @@
 #+author: Gunnar Wolf
 
 - Tema presentado por :: Jesús Miguel Fajardo Suárez
-- Calificación global :: 8.68 * 0.3 + 6.13 * 0.7 = *6.895*
+- Calificación global :: 8.68 * 0.3 + 7.63 * 0.7 = *7.94*
 
 * Evaluación grupal
 
@@ -35,12 +35,12 @@
 | *Aspecto*              | *Peso* | *Evaluación* | *Puntos* |
 |------------------------+--------+--------------+----------|
 | Originalidad del tema  |    0.1 |           10 |       1. |
-| Material desarrollado  |    0.2 |            0 |       0. |
+| Material desarrollado  |    0.2 |            5 |       1. |
 | Contenido              |    0.2 |          7.5 |      1.5 |
-| Fuentes bibliográficas |    0.1 |            0 |       0. |
+| Fuentes bibliográficas |    0.1 |            5 |      0.5 |
 | Uso del tiempo         |    0.1 |           10 |       1. |
 | Dominio del tema       |   0.15 |          7.5 |    1.125 |
 | Presencia              |   0.15 |           10 |      1.5 |
 |------------------------+--------+--------------+----------|
-| *Global*               |        |              |     6.13 |
+| *Global*               |        |              |     7.63 |
 #+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
