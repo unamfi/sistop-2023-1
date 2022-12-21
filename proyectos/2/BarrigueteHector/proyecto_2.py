@@ -1,14 +1,17 @@
 import os
 
 global lista_archivos, lista_clusters
-lista_archivos = []
-lista_clusters = []
+lista_archivos = [] #Lista de archivos
+lista_clusters = [] #Lista de clusters
 
 def mostrar_contenido(file_system, cluster_size):
     print("\n------------ CONTENIDO ------------")
     print("    Nombre\tCreacion del archivo\tUltima modificacion")
+    
+    #Nos movemos hasta la parte de los archivos
     file_system.seek(cluster_size)
     
+    #Recorremos el sistema de archivos en busca de todos los archivos
     for i in range(0, cluster_size * 4, 64):
         file_system.seek(cluster_size + i)
         file = file_system.read(16).decode("utf-8")
@@ -22,7 +25,9 @@ def mostrar_contenido(file_system, cluster_size):
                 else:
                     j += 1
             
+            #Hay un archivo
             if j < 15:
+                #Nombre
                 print("-", file[j:15], end = "\t")
                 
                 j = 0
@@ -69,15 +74,19 @@ def eliminar_archivo(file_system, cluster_size):
     
     file_delete = input("Ingresa el nombre del archivo a eliminar (incluya la extensión): ")
 
+    #¿El archivo a eliminar se encuentra en la lista de archivos registrados?
     if file_delete in lista_archivos:
+        #Nos movemos hasta la parte de los archivos
         file_system.seek(cluster_size)
 
+        #Buscamos el archivo a eliminar
         for i in range(0, cluster_size * 4, 64):
             file_system.seek(cluster_size + i)
             file = file_system.read(16).decode("utf-8")
             
             j = 0
 
+            #Esto lo podemos cambiar por todo el file y no caracter por caracter
             if file[j] ==  '-':
                 while(file[j] == " " or file[j] == "-"):
                     if j == 15:
@@ -85,10 +94,13 @@ def eliminar_archivo(file_system, cluster_size):
                     else:
                         j += 1
             
+            #Archivo encontrado (puede que sea o no el que vamos a eliminar)
             if j < 15:
                 file = file[j:15]
 
-                if file == file_delete:                    
+                #¿Es el archivo que vamos a eliminar?
+                if file == file_delete:              
+                    #Se limpian los 64 bytes      
                     #NOMBRE
                     file_system.seek(cluster_size + i)
                     file_system.write("---------------".encode("utf-8"))
@@ -109,13 +121,15 @@ def eliminar_archivo(file_system, cluster_size):
     else:
         print("\n!!!!! El archivo no existe en el sistema de archivos ¡¡¡¡¡")
 
+#Función para obtener los indices de los clusters
 def index_cluster(file_system, cluster_size):
     file_system.seek(cluster_size)
         
     for i in range(0, cluster_size * 4, 64):
         file_system.seek(cluster_size + i)
         lista_clusters.append(cluster_size + i)
-    
+
+#Función para obtener los nombres de los archivos y espacios vacios, se respeta el orden del sistema de archivos
 def archivos_iniciales(file_system, cluster_size):
     lista_archivos.clear()
     
@@ -176,12 +190,12 @@ def main():
         archivos_iniciales(file_system, cluster_size)
         index_cluster(file_system, cluster_size)
     else:
-        opcion = 5
+        opcion = 6
         print("\n¡¡¡¡¡ La versión del sistema de archivos no es compatible con la versión del programa !!!!!\nNo es posible iniciar el sistema de archivos\n")
 
     file_version.close()
 
-    while int(opcion) != 5:
+    while int(opcion) != 6:
         opcion = input("\n\n------------ MENU ------------\n1. Listar contenido\n2. Copiar archivo de FiUnamFS hacia este sistema\n3. Copiar archivo de este sistema hacia FiUnamFS\n4. Eliminar un archivo de FiUnamFS\n5. Desfragmentar\n6. Salir\nIngresa una opcion: ")
 
         file_system = open("fiunamfs.img", "r+b")
