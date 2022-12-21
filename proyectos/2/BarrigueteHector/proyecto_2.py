@@ -182,7 +182,7 @@ def main():
     file_version.close()
 
     while int(opcion) != 5:
-        opcion = input("\n\n------------ MENU ------------\n1. Listar contenido\n2. Copiar archivo de FiUnamFS hacia este sistema\n3. Copiar archivo de este sistema hacia FiUnamFS\n4. Eliminar un archivo de FiUnamFS\n5. Desfragmentar\n6. Salir\nIngresa una opcion: ")
+        opcion = input("\n\n------------ MENU ------------\n1. Listar contenido\n2. Copiar archivo de FiUnamFS hacia este sistema\n3. Copiar archivo de este sistema hacia FiUnamFS\n4. Eliminar un archivo de FiUnamFS\n5. Salir\nIngresa una opcion: ")
 
         file_system = open("fiunamfs.img", "r+b")
         file_size = os.stat("fiunamfs.img").st_size
