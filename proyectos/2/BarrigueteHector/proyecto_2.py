@@ -4,8 +4,60 @@ global lista_archivos, lista_clusters
 lista_archivos = []
 lista_clusters = []
 
-def mostrar_contenido():
-    pass
+def mostrar_contenido(file_system, cluster_size):
+    print("\n------------ CONTENIDO ------------")
+    print("    Nombre\tCreacion del archivo\tUltima modificacion")
+    file_system.seek(cluster_size)
+    
+    for i in range(0, cluster_size * 4, 64):
+        file_system.seek(cluster_size + i)
+        file = file_system.read(16).decode("utf-8")
+        
+        j = 0
+
+        if file[j] ==  '-':
+            while(file[j] == " " or file[j] == "-"):
+                if j == 15:
+                    break
+                else:
+                    j += 1
+            
+            if j < 15:
+                print("-", file[j:15], end = "\t")
+                
+                j = 0
+                j = 15 + 9
+                file_system.seek(cluster_size + i + j)
+                j = 0
+
+                #CREACION
+                file = file_system.read(4).decode("utf-8") #Year
+                print(file, end = "-")
+                file = file_system.read(2).decode("utf-8") #Month
+                print(file, end = "-")
+                file = file_system.read(2).decode("utf-8") #Day
+                print(file, end = " ")
+                file = file_system.read(2).decode("utf-8") #Hour
+                print(file, end = ":")
+                file = file_system.read(2).decode("utf-8") #Minute
+                print(file, end = ":")
+                file = file_system.read(2).decode("utf-8") #Second
+                print(file, end = "\t")
+
+                #MODIFICACION
+                file = file_system.read(4).decode("utf-8") #Year
+                print(file, end = "-")
+                file = file_system.read(2).decode("utf-8") #Month
+                print(file, end = "-")
+                file = file_system.read(2).decode("utf-8") #Day
+                print(file, end = " ")
+                file = file_system.read(2).decode("utf-8") #Hour
+                print(file, end = ":")
+                file = file_system.read(2).decode("utf-8") #Minute
+                print(file, end = ":")
+                file = file_system.read(2).decode("utf-8") #Second
+                print(file, end = "\n")
+
 
 def copiar_al_sistema():
     pass
@@ -83,7 +135,7 @@ def main():
         archivos_iniciales(file_system, cluster_size)
         index_cluster(file_system, cluster_size)
     else:
-        opcion = 6
+        opcion = 5
         print("\n¡¡¡¡¡ La versión del sistema de archivos no es compatible con la versión del programa !!!!!\nNo es posible iniciar el sistema de archivos\n")
 
     file_version.close()
