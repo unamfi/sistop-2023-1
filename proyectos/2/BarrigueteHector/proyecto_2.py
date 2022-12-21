@@ -58,15 +58,56 @@ def mostrar_contenido(file_system, cluster_size):
                 file = file_system.read(2).decode("utf-8") #Second
                 print(file, end = "\n")
 
-
 def copiar_al_sistema():
     pass
 
 def copiar_a_fiunamfs():
     pass
 
-def eliminar_archivo():
-    pass
+def eliminar_archivo(file_system, cluster_size):
+    print("\n------------ ELIMINAR ARCHIVO DE fiunamfs ------------")
+    
+    file_delete = input("Ingresa el nombre del archivo a eliminar (incluya la extensión): ")
+
+    if file_delete in lista_archivos:
+        file_system.seek(cluster_size)
+
+        for i in range(0, cluster_size * 4, 64):
+            file_system.seek(cluster_size + i)
+            file = file_system.read(16).decode("utf-8")
+            
+            j = 0
+
+            if file[j] ==  '-':
+                while(file[j] == " " or file[j] == "-"):
+                    if j == 15:
+                        break
+                    else:
+                        j += 1
+            
+            if j < 15:
+                file = file[j:15]
+
+                if file == file_delete:                    
+                    #NOMBRE
+                    file_system.seek(cluster_size + i)
+                    file_system.write("---------------".encode("utf-8"))
+                    #TAMAÑO
+                    file_system.seek(cluster_size + i + 16)
+                    file_system.write("0000".encode("utf-8"))
+                    #CLUSTER INICIAL
+                    file_system.seek(cluster_size + i + 19)
+                    file_system.write("000".encode("utf-8"))
+                    #FECHA DE CREACION Y MODIFICACION
+                    file_system.seek(cluster_size + i + 24)
+                    file_system.write("0000000000000000000000000000".encode("utf-8"))
+
+                    lista_archivos.remove(file_delete)
+
+                    print("\n¡¡¡¡¡ Archivo eliminado exitosamente !!!!!")
+                    break
+    else:
+        print("\n!!!!! El archivo no existe en el sistema de archivos ¡¡¡¡¡")
 
 def index_cluster(file_system, cluster_size):
     file_system.seek(cluster_size)
