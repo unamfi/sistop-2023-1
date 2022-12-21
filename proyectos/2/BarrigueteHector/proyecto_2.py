@@ -16,6 +16,33 @@ def copiar_a_fiunamfs():
 def eliminar_archivo():
     pass
 
+def index_cluster(file_system, cluster_size):
+    file_system.seek(cluster_size)
+        
+    for i in range(0, cluster_size * 4, 64):
+        file_system.seek(cluster_size + i)
+        lista_clusters.append(cluster_size + i)
+    
+def archivos_iniciales(file_system, cluster_size):
+    lista_archivos.clear()
+    
+    file_system.seek(cluster_size)
+    
+    j = 0
+
+    for i in range(0, cluster_size * 4, 64):
+        file_system.seek(cluster_size + i)
+        file = file_system.read(15).decode("utf-8")
+        
+        if file == "---------------":
+            lista_archivos.append("---")
+        else:
+            while(file[j] == " " or file[j] == "-"):
+                j += 1
+            
+            lista_archivos.append(file[j:15])
+            j = 0
+
 def main():
     sector_size = 256
     cluster_size = sector_size * 4
@@ -53,7 +80,8 @@ def main():
     f_version = file_version.read(4).decode("utf-8")
     
     if (f_version in version):
-        print("\nLa versión del sistema de archivos es compatible con la versión del programa\n")
+        archivos_iniciales(file_system, cluster_size)
+        index_cluster(file_system, cluster_size)
     else:
         opcion = 6
         print("\n¡¡¡¡¡ La versión del sistema de archivos no es compatible con la versión del programa !!!!!\nNo es posible iniciar el sistema de archivos\n")
