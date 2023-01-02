@@ -81,10 +81,17 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
   - 20--35 :: Etiqueta del volumen
   - 40--44 :: Tamaño del cluster en bytes
   - 45--49 :: Número de clusters que mide el directorio
-  - 48--51 :: Número de clusters que mide la unidad completa
+  - 50--54 :: Número de clusters que mide la unidad completa
   El resto del superbloque puede quedar vacío (o puedes
   /sobrecargarlo/ con otros datos  — No es importante para la
   implementación.
+
+  *Ojo:* Por confusión míá, al plantear el proyecto el último valor
+  (número de clusters en la unidad) aparecía sobreponiéndose al
+  anterior (número de clusters en el directorio), del caracter 48
+  al 51. El valor correcto es 50--54. ¡Agradezco a la compañera que me
+  hizo ver el error, con excelente información para sustentarlo!
+
 - El sistema de archivos es de /asignación contigua/. Toda la
   información de los archivos está en el directorio.
 - El directorio está ubicado en los clusters 1 a 4. Cada entrada del
