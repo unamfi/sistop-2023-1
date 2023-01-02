@@ -22,6 +22,8 @@
   | 2022.12.13 | Emuladores                                               | Jesús Fajardo                       | [[./FajardoJesus/PresentacionEmuladores-Fajardo.pdf][Presentación (PDF)]]                           | [[./FajardoJesus/evaluacion_alumnos.pdf][Evaluación de los compañeros]], [[./FajardoJesus/evaluacion.org][Evaluación global]] |
   | 2023.01.05 | Funcionamiento de los antivirus                          | Erick Jair Méndez y Carla Rodríguez |                                              |                                                 |
   | 2023.01.05 | WSL - Windows Subsystem for Linux                        | Alan Méndez                         |                                              |                                                 |
+  | 2023.01.10 | Sistemas operativos en consolas de videojuego            | Bryan Mejía                         |                                              |                                                 |
+  | 2023.01.10 | Preservación de información a muy largo plazo            | Luis Zúñiga                         |                                              |                                                 |
   |------------+----------------------------------------------------------+-------------------------------------+----------------------------------------------+-------------------------------------------------|
   #+TBLFM: 
 
