@@ -1,0 +1,4 @@
+El problema abordado para este proyecto se enfoca en la cantidad limitada de parrillas
+que tienen las estufas al momento de cocinar, así como los diferentes trastes que se pueden emplear a la hora de realizar la comida.
+Las consecuencias de la concurrencia se pueden dar cuando se quieren poner dos trastes en la misma parrilla, además como los sartenes se suelen utilizar para alimentos de menor cocción es necesario tenerlos en las parrillas delanteras de la estufa.
+El programa llevara el conteo total del numero de sartenes y ollas que se han procesado en cada parrilla. Se pueden ir agregando mas sartenes y ollas al gusto.

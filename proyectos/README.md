@@ -1,3 +1,4 @@
 # Proyectos
 
-<!-- 1. [Revisión de MiComputer](./1/README.md) (Entrega: 2021.xx.xx) -->
+1. [Una situación cotidiana paralelizable](./1/README.org) (Entrega: 2022.11.29)
+2. [(Micro) sistema de archivos](./2/README.org) (Entrega: 2023.01.05)

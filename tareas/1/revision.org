@@ -1,0 +1,383 @@
+** Blancas Mauricio, Hernandez Azucena
+- Archivos :: [[./BlancasMauricio-HernandezAzucena/Tarea1.java][Tarea1.java]]
+- Lenguaje :: Java
+- Funcional :: Casi-sí
+- Comentarios ::
+  - Detalles de Java: El nombre de la clase debe concordar con el
+    nombre del archivo. Cuando intenté compilar su archivo, el
+    compilador me dijo que:
+    #+begin_src sh
+      $ javac Tarea1.java 
+      Tarea1.java:8: error: class Main is public, should be declared in a file named Main.java
+      public class Main
+	     ^
+      1 error
+    #+end_src
+    No pasa nada: Renombro =Tarea1= a =Main=, o cambio el nombre de
+    clase a =Tarea1=. ¡Pero verifiquen!
+  - Si intento hacer una asignación que excede el espacio contiguo, el
+    programa (incorrectamente) lo separa. ¡La asignación *debe ser
+    contigua*!
+    #+begin_src sh
+
+      Asignacion actual: 
+
+      A A B B B B C C C C D D D D D D E E E E - - - H H H I I - - 
+      Asignar (0) o liberar (1) Salir (2):
+      0
+
+       Nuevo proceso (T):
+      4
+      Asignacion actual: 
+
+      A A B B B B C C C C D D D D D D E E E E T T T H H H I I T T 
+      Asignar (0) o liberar (1) Salir (2):
+    #+end_src
+  - La asignación siempre asigna el 100% de espacio disponible,
+    independientemente del tamaño del proceso indicado. Incluso con
+    el espacio completamente vacío:
+    #+begin_src sh
+      Asignacion actual: 
+
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      Asignar (0) o liberar (1) Salir (2):
+      0
+
+       Nuevo proceso (N):
+      1
+      Asignacion actual: 
+
+      N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N 
+      Asignar (0) o liberar (1) Salir (2):
+    #+end_src
+  - Detalles de usabilidad: Al solicitar liberar, el programa siempre
+    pide =Proceso a liberar(ABCDEHI)=, independientemente de los
+    procesos que formen parte del conjunto actual. Esto se debe a que
+    en su código no verifican que la asignación sea =<=n=. Líneas 71–82:
+    #+begin_src java
+      r = (char) (random.nextInt(17) + 'I');
+      System.out.println("\n Nuevo proceso (" + r + "):");
+      n = in.nextInt();
+
+      for (int i = 0; i<tamaño; i++){
+	  char s = lista.get(i);
+	  if(s=='-'){
+	      sep = i;
+	      count++;
+	  }
+
+      }
+    #+end_src    
+- Calificación :: 7
+
+** Fajardo Jesus
+- Archivos :: [[./FajardoJesus/MiguelFajardo6-Tarea1.py][MiguelFajardo6-Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - OK... A partir de mi descripción, supuse que serían todos
+    programas interactivos. ¡Pero no es un requisito expreso!
+    Completamente válido como lo hiciste (si bien un poco tedioso para
+    probar)
+  - Estilo: Te sugiero fuertemente utilizar comentarios siguiendo este
+    formato:
+    #+begin_src python
+      # Si hay espacio suficiente se guarda el proceso en la memoria
+      if Espa + process[x].espacio < 30: 
+    #+end_src
+    Y no así:
+    #+begin_src python
+    if Espa + process[x].espacio < 30: #Si hay espacio suficiente se guarda el proceso en la memoria
+    #+end_src
+    Primero describes y luego realizas lo que describiste. Además, es
+    más legible independientemente del ancho de tu ventana de texto. Y
+    cognitivamente, manejar líneas demasiado largas dificulta la
+    lectura.
+  - Invocas a la compactación de memoria incluso cuando no es
+    requerida. Eso llevaría a desperdiciar mucho trabajo moviendo
+    regiones de memoria sin necesidad:
+    #+begin_src text
+      ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+      C Agregado por peor ajuste
+
+      ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'C', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+      Compactación de memoria
+      ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'C', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+      D Agregado por peor ajuste
+
+      ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'C', 'D', 'D', 'D', 'D', '-', '-', '-', '-', '-', '-']
+      Compactación de memoria
+      ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'C', 'D', 'D', 'D', 'D', '-', '-', '-', '-', '-', '-', '-', '-']
+    #+end_src
+  - Pero pese a todo, cumples perfectamente las consignas
+    enunciadas. ¡Muy bien!
+- Calificación :: 10
+
+** Flores Carlos
+- Archivos :: [[./FloresCarlos/Tarea1.c][Tarea1.c]]
+- Lenguaje :: C
+- Funcional :: Sí
+- Comentarios ::
+  - Estilo: Te sugiero fuertemente utilizar comentarios siguiendo este
+    formato:
+    #+begin_src C
+      // Repite el recorrido de la memoria para evitar espacios entre procesos
+      for(r=0;r<3;r++){ 
+	  i=0;
+	  // Optimiza los espacios vacíos
+	  while(i<30){
+    #+end_src
+    Y no así:
+    #+begin_src C
+      for(r=0;r<3;r++){ // Repite el recorrido de la memoria para evitar espacios entre procesos
+	  i=0;
+	  while(i<30){ // Optimiza los espacios vacíos
+    #+end_src
+    Primero describes y luego realizas lo que describiste. Además, es
+    más legible independientemente del ancho de tu ventana de texto. Y
+    cognitivamente, manejar líneas demasiado largas dificulta la
+    lectura.
+  - ¡Muy buen manejo de condiciones inesperadas! No vi ningún caso en
+    que se "rompiera" la ejecución esperable.
+    - Si acaso, llamaría tu atención a que cualquier caracter es
+      aceptado como nombre de proceso (no sólo A-Z como lo sugieres);
+      si uso el caracter =-= hace todas las verificaciones, pero lo
+      marca como vacío.
+- Calificación :: 10
+
+** Mejia Israel
+- Archivos :: [[./MejiaIsrael/mejia_israel.py][mejia_israel.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - ¡Muy buena implementación!
+  - Estilo: Te sugiero fuertemente utilizar comentarios siguiendo este
+    formato:
+    #+begin_src python
+	      while u > 0 :
+		  process_list[insertion_index] = p_name
+		   # Avanzamos a la siguiente insercion
+		  insertion_index += 1
+		  # Reducimos el contador de unidades de memoria a insertar del proceso 
+		  u -= 1
+    #+end_src
+    Y no así:
+    #+begin_src python
+      while u > 0 :
+	  process_list[insertion_index] = p_name
+	  insertion_index += 1 #Avanzamos a la siguiente insercion
+	  u -= 1 #Reducimos el contador de unidades de memoria a insertar del proceso 
+
+    #+end_src
+    Primero describes y luego realizas lo que describiste. Además, es
+    más legible independientemente del ancho de tu ventana de texto. Y
+    cognitivamente, manejar líneas demasiado largas dificulta la
+    lectura.
+- Calificación :: 10
+
+** Mejia Bryan
+- Archivos :: [[./MejiaBryan/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Buena implementación
+  - Me gustó que cada proceso fuera una cadena diferente sobre un
+    arreglo de 30 elementos. Sin embargo, lleva a algunos detalles
+    "interesantes". Dado que no estás verificando que cada elemento
+    mida un caracter, puedo hacer:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      Algo
+      ¿Cuantas unidades necesita el nuevo proceso?
+      5
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAlgoAlgoAlgoAlgoAlgo-------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+  - El programa no verifica que un proceso no exista ya en el listado:
+    #+begin_src text
+      Memoria actual:
+      -AAABB------------------------
+      Asignar 0, liberar 1: 
+      0
+
+      ¿Que nuevo proceso quieres asignar? :)
+      A
+      ¿Cuantas unidades necesita el nuevo proceso?
+      2
+      Quieres continuar: S/N
+      S
+      Memoria actual:
+      -AAABBAA----------------------
+      Asignar 0, liberar 1: 
+    #+end_src
+    - Y por tanto, a la hora de liberar...
+      #+begin_src text
+	Memoria actual:
+	-AAABBAA----------------------
+	Asignar 0, liberar 1: 
+	1
+
+	¿Que proceso quiere liberar? :D (A B A )
+	A
+	Quieres continuar: S/N
+	S
+	Memoria actual:
+	----BB------------------------
+	Asignar 0, liberar 1: 
+      #+end_src    
+- Calificación :: 10
+
+** Mendez Erick, Rodriguez Carla
+- Archivos :: [[./MendezErick-RodriguezCarla/Memoria.java][Memoria.java]]
+- Lenguaje :: Java
+- Funcional :: Sí
+- Comentarios ::
+  - El código fuente no sólo es para que /la computadora/ procese sus instrucciones
+    - Es una herramienta de comunicación entre humanos
+    - En un futuro, podría tocarles dar mantenimiento a un programa
+      que escribieron hace años
+    - ...Separen su programa en funciones. Cuiden estructurar su
+      código en "párrafos". Comenten ampliamente, no lo relativo a la
+      instrucción inmediata siguiente, sino lo relativo al diseño
+      general y lógica global del programa.
+  - El programa es robusto (no se "cae" en situaciones de error o de
+    entrada inesperada), pero no notifica al usuario de situaciones de
+    error. Por ejemplo, el usuario podría no darse cuenta de que
+    falló una asignación de memoria por bajos recursos:
+    #+begin_src text
+      La asignacion de memoria ACTUAL es:BBBBBBBBBBAAADDDEEECCCCCCCCFFF
+
+      DIGITA UNA OPCION
+      Asignar(0)/liberar (1)/Salir(-1)
+      0
+      Ingresa las unidades que tiene el nuevo proceso(G):
+      3
+
+      La asignacion de memoria ACTUAL es:BBBBBBBBBBAAADDDEEECCCCCCCCFFF
+      DIGITA UNA OPCION
+      Asignar(0)/liberar (1)/Salir(-1)
+    #+end_src
+- Calificación :: 10
+
+** Muñoz Tamés María Ángel
+- Archivos :: [[./MuñozTamésMaríaÁngel/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí (¡aunque falta manejo de excepciones!)
+- Comentarios ::
+  - Muy buena implementación
+  - Ojo al verificar la entrada del usuario: Si recibe un tipo de
+    datos inesperado, el proceso se muere a la mala. Es importante
+    considerar (y procesar!) las situaciones que puedan causar estos
+    errores.
+    - Ejemplo: Si das la unidad equivocada para asignar el tamaño de
+      un nuevo proceso, el programa se muere /feamente/:
+      #+begin_src text
+	Asignación actual (primer ajuste):
+	AAAAA-------------------------
+
+
+	¿Quieres continuar? NO(0) SI(1)1
+	Asignar (0) o liberar (1): 0
+	Tamaño del nuevo proceso (B):ocho
+	Traceback (most recent call last):
+	  File "/home/gwolf/vcs/sistop-2023-1/tareas/1/MuñozTamésMaríaÁngel/Tarea1.py", line 19, in <module>
+	    p_size = int(input("Tamaño del nuevo proceso ("+process+"):"))
+	ValueError: invalid literal for int() with base 10: 'ocho'
+      #+end_src
+    - El programa está escrito como un gran /chorizo/, es difícil de
+      leer. Sería mucho mejor para su lectura y manteniminto futuro si
+      lo dividieras en funciones.
+- Calificación :: 
+
+** Tafolla Esteban
+- Archivos :: [[./TafollaEsteban/Tarea1.c][Tarea1.c]]
+- Lenguaje :: C
+- Funcional :: Sí
+- Comentarios ::
+  - La terminación de procesos opera como un /stack/
+    - No me pregunta por el proceso que quiero terminar, sino que
+      termina el más reciente en iniciar su ejecución.
+    - De tal manera, nunca se puede presentar necesidad de
+      compactación (lo cual sería lindo, pero es terriblemente irreal).
+- Calificación :: 8.5
+
+** Guerrero Issac
+- Archivos :: [[./BarrigueteHector/Tarea1.py][Tarea1.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Tu programa no reporta error en caso de estar la memoria llena:
+    #+begin_src python
+      ['A', 'B', 'B', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', 'H', 'H', 'H', 'H', 'F', 'F', 'F', 'F', 'G', 'G', 'G', 'G', 'G', 'G', 'G']
+      Asignar(0) o Liberar (1) o Salir (3)
+
+      0
+      Escribe letra del proceso
+      W
+      Escribe cantidad de memoria
+      4
+      ['A', 'B', 'B', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', 'H', 'H', 'H', 'H', 'F', 'F', 'F', 'F', 'G', 'G', 'G', 'G', 'G', 'G', 'G']
+      Asignar(0) o Liberar (1) o Salir (3)                                                                                                                    
+    #+end_src
+  - Tampoco validas que se solicite espacio para un proceso que ya
+    tienes, lo cual podría causar confusión:
+    #+begin_src python
+      ['T', 'T', 'T', 'T', 'R', 'R', 'R', 'E', 'E', 'E', '-', '-', '-', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', '-', '-', 'F', 'F', 'F', 'F', 'F']
+      Asignar(0) o Liberar (1) o Salir (3)
+
+      0
+      Escribe letra del proceso
+      R
+      Escribe cantidad de memoria
+      2
+      maximo_espacio: 3
+      10
+      el valor de compactacion es: 10
+      ['T', 'T', 'T', 'T', 'R', 'R', 'R', 'E', 'E', 'E', 'R', 'R', '-', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', '-', '-', 'F', 'F', 'F', 'F', 'F'] 
+    #+end_src
+- Calificación :: 10
+
+** Barriguete Héctor
+- Archivos :: [[./GuerreroIssac/memoria.py][memoria.py]]
+- Lenguaje :: Python
+- Funcional :: Sí
+- Comentarios ::
+  - Mismo comentario que al programa anterior: No validas si se está
+    solicitando espacio para un proceso que ya existe, lo cual puede
+    ser confuso:
+    #+begin_src python
+      ------------ Menu ------------
+      1. Asignar memoria
+      2. Liberar memoria
+      3. Salir
+      Opcion: 1
+
+      Ingresa el nuevo elemento: C
+      Ingresa la longitud del nuevo elemento: 3
+
+      Asignación actual:
+      AAAAABBBBBBBCCC---------------
+      Asignar (0) o liberar (1): 0
+      Nuevo proceso (C): 3
+      Nueva asignacion:
+      AAAAABBBBBBBCCCCCC------------
+    #+end_src
+  - Tampoco validas que el nombre de un elemento sea de un sólo
+    caracter:
+    #+begin_src python
+      Asignación actual:
+      AAAAABBBBBBB----FFF-----------
+      Asignar (0) o liberar (1): 0
+      Nuevo proceso (Cuac.): 3
+      Nueva asignacion:
+      AAAAABBBBBBBCuac.Cuac.Cuac.-FFF-----------
+    #+end_src
+- Calificación :: 10
