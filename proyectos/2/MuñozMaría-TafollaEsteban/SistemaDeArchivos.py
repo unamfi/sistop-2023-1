@@ -87,7 +87,7 @@ def inicializaArchivos():
 def muestraDirectorio():
     global archivos
     for x in archivos:
-        print(x.nombre, x.clusterInicial)
+        print(x.nombre, x.tamanio, x.clusterInicial)
 
 
 def actualizaMapa():
@@ -222,6 +222,10 @@ def agregaADirectorio(archivoAux):
     borraArchivo(archivoAux.nombre)
     return -1
 
+def arreglaDirectorio():
+    inicial = 1024 + (5 * 64)
+    meteDatoPack(1024+16, 12272)
+
 def asignaCluster(tam):
     global mapaAlmacenamiento
     try:
@@ -238,7 +242,7 @@ def asignaCluster(tam):
 
 def agregaEspacios(nombre):
     while(len(nombre) != 14):
-        nombre = " " + nombre
+        nombre = nombre + " "
     return nombre
 
 def desfragmentar():
@@ -292,19 +296,29 @@ def actualizarDirectorio():
 
 def inicio():
 
+
     iniciaMapa()
     inicializaArchivos()
-    print("1.")
+    arreglaDirectorio()
+    """
+    copiaArchivoAComputadora("mensajes.png","C:/2023-1/SO/2/")
     #print(mapaAlmacenamiento)
     print("Directorio:")
     muestraDirectorio()
-    print("Copia Archivo:")
     copiaArchivoAImagen("C:/2023-1/SO/2/holi.txt")
-    print("2.")
+    copiaArchivoAImagen("C:/2023-1/SO/2/holi.txt")
+    desfragmentar()
+    copiaArchivoAComputadora("mensajes.png","C:/2023-1/SO/2/")
+    copiaArchivoAComputadora("holi.txt","C:/2023-1/SO/2/")
+    copiaArchivoAComputadora("README.org","C:/2023-1/SO/2/")
+    copiaArchivoAComputadora("logo.png","C:/2023-1/SO/2/")
+    print("Copia Archivo:")
+    """
     #copiaArchivoAComputadora("logo.png","C:/Users/steph/Desktop/Tareas 7mosemestre")
     #borraArchivo("mensajes.png")
     #copiaArchivoAImagen("C:/Users/steph/Desktop/Tareas 7mosemestre/Ta folla.pdf")
     #print(mapaAlmacenamiento)
+    """
     desfragmentar()
     muestraDirectorio()
     asignaCluster(100)
@@ -312,6 +326,7 @@ def inicio():
     #copiaArchivoAComputadora("logo.png","C:/Users/steph/Desktop/Tareas 7mosemestre")
     copiaArchivoAComputadora("mensajes.png","C:/2023-1/SO/2/")
     #print(mapaAlmacenamiento)
+    """
 
 """""""""
 print("Saca datos:")
