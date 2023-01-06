@@ -27,6 +27,18 @@ def datoUnpack(inicio, tamanio):
     dato = imagen.read(tamanio)
     return struct.unpack('<i', dato)[0]
 
+def meteDatosAscii(inicio, dato):
+    global imagen
+    imagen.seek(inicio)
+    dato = dato.encode("ascii")
+    return imagen.write(dato)
+
+def meteDatoPack(inicio, dato):
+    global imagen
+    imagen.seek(inicio)
+    dato = struct.pack('<i', dato)
+    return imagen.write(dato)
+
 tamanioCluster= datoUnpack(40,4) #Da 1024
 clustersDirectorio = datoUnpack(45,4) #Da 4
 clustersUnidad = datoUnpack(50,4) #Da 720
@@ -61,7 +73,7 @@ def sacaDatosArchivo(posicion):
         archivoAux = archivo(nombre, tamanio, clusterInicial, fechaCreacion, fechaModificacion)
         print(tipo, nombre, tamanio, clusterInicial, fechaCreacion, fechaModificacion, archivoAux.numClusters) #borrar
         return archivoAux
-        
+
 def inicializaArchivos():
     global archivos
     numArchivos = int((tamanioCluster * clustersDirectorio)/tamanioDirectorio)
@@ -91,8 +103,8 @@ def actualizaMapa():
             mapaAlmacenamiento[archivoActual.clusterInicial+j] = 1
     #print(mapaAlmacenamiento)#borrar
 
-#Método que copia un archivo desde el sistema de archivos a la computadora 
-#Devolvera -1 en caso de no encotrar el archivo    
+#Método que copia un archivo desde el sistema de archivos a la computadora
+#Devolvera -1 en caso de no encotrar el archivo
 def buscaArchivoNombre(nombre):
     global archivos
     for x in archivos:
@@ -109,11 +121,12 @@ def buscaArchivoClusterInicial(clusterInicial):#borrar?
             return archivos.index(x)
     return -1
 
-#Método que copia un archivo desde el sistema de archivos a la computadora 
+#Método que copia un archivo desde el sistema de archivos a la computadora
 def copiaArchivoAComputadora(nombreArchivo, ruta):
     global archivos
     global imagen
-    
+
+    desfragmentar()
     #busca si el nombre del archvo se encuentra en nuestro sistema de archivos.
     posicion = buscaArchivoNombre(nombreArchivo)
     if(posicion != -1):
@@ -134,12 +147,18 @@ def borraEnDirectorio(posicion):
     inicial = 1024 + (posicion * 64)
     imagen.seek(inicial)
     imagen.write(b'---------------'+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00'+b'0000000000000000000000000000'+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-    
-    
+
+def borraEnDirectorio2(posicion):
+    global imagen
+    inicial = 1024 + (posicion * 64)
+    imagen.seek(inicial)
+    imagen.write(b'-              '+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00'+b'0000000000000000000000000000'+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+
 #Método que borra un archivo de nuestro sistema de archivos
-def borraArchivo(nombreArchivo, archivos):
+def borraArchivo(nombreArchivo):
+    global archivos
     for x in archivos:
-        if(x.nombre==nombreArchivo):           
+        if(x.nombre==nombreArchivo):
             archivos.pop(archivos.index(x))
             actualizaMapa()
             for y in range(64):
@@ -148,8 +167,9 @@ def borraArchivo(nombreArchivo, archivos):
                 if(nombre == nombreArchivo):
                     borraEnDirectorio(y)
                     return
+                return
     print("El archivo para borrar no existe")
-    return 
+    return
 
 #Método que copia un archivo desde nuestra computadora a nuestro sistema de archivos.
 def copiaArchivoAImagen(rutaOrigen):
@@ -158,13 +178,50 @@ def copiaArchivoAImagen(rutaOrigen):
     if(os.path.exists(rutaOrigen) and len(os.path.split(rutaOrigen)[-1].replace(" ","")) < 15 and os.stat(rutaOrigen).st_size < 732160):
         #verificamos que no exista un archivo en el sistema con el mismo nombre
         if(buscaArchivoNombre(os.path.split(rutaOrigen)[-1]==-1)):
-            nombre=os.path.split(rutaOrigen)[-1]
+            nombre=agregaEspacios(os.path.split(rutaOrigen)[-1])
             tamanio = os.stat(rutaOrigen).st_size
             clusterInicial = asignaCluster(tamanio)
+            if (clusterInicial == -1):
+                return
             fechaCreacion = datetime.datetime.strptime(time.ctime(os.stat(rutaOrigen).st_ctime), "%a %b %d %H:%M:%S %Y").strftime("%Y%m%d%H%M%S")
             fechaModificacion = datetime.datetime.strptime(time.ctime(os.stat(rutaOrigen).st_mtime), "%a %b %d %H:%M:%S %Y").strftime("%Y%m%d%H%M%S")
             archivoAux = archivo(nombre, tamanio, clusterInicial, fechaCreacion, fechaModificacion)
-            
+            #añadir Archivos
+            archivos.append(archivoAux)
+            #añadir a directorio
+            if (agregaADirectorio(archivoAux)==-1):
+                return
+            #añadir a imagen
+            agregaArchivoAImagen(rutaOrigen, archivoAux)
+            #actualizar mapa
+            actualizaMapa()
+
+def agregaArchivoAImagen(rutaOrigen, archivoAux):
+    global imagen
+    Auxfile = open(rutaOrigen,"br")
+    contenido = Auxfile.read()
+    Auxfile.close()
+
+    inicio=archivoAux.clusterInicial*tamanioCluster
+    imagen.seek(inicio)
+    imagen.write(contenido)
+
+def agregaADirectorio(archivoAux):
+    for y in range(64):
+        inicial = 1024 + (y * 64)
+        if (sacaDatosAscii(inicial+1, 14)=="--------------"):
+            borraEnDirectorio2(y)
+            meteDatosAscii(inicial,"-")
+            meteDatosAscii(inicial+1, archivoAux.nombre)
+            meteDatoPack(inicial+16, archivoAux.tamanio)
+            meteDatoPack(inicial+20, archivoAux.clusterInicial)
+            meteDatosAscii(inicial+24, archivoAux.fechaCreacion)
+            meteDatosAscii(inicial+38, archivoAux.fechaModificacion)
+            return 1
+    print("Ya no hay espacio en el directorio")
+    borraArchivo(archivoAux.nombre)
+    return -1
+
 def asignaCluster(tam):
     global mapaAlmacenamiento
     try:
@@ -178,6 +235,7 @@ def asignaCluster(tam):
     else:
         return -1
     #print("cluster inicial posible", clusterInicialPosible)
+
 def agregaEspacios(nombre):
     while(len(nombre) != 14):
         nombre = " " + nombre
@@ -186,7 +244,7 @@ def agregaEspacios(nombre):
 def desfragmentar():
     global archivos
     global imagen
-    global mapaAlmacenamiento 
+    global mapaAlmacenamiento
     espacioLibre = 0
     posicionMapa = -1
     for x in mapaAlmacenamiento:
@@ -222,7 +280,6 @@ def actualizarDirectorio():
     global archivos
     for y in range(64):
         resultado = sacaDatosArchivo(y)
-        
         if(resultado != None  ):
             posicionArchivo = buscaArchivoNombre(resultado.nombre)
             if(archivos[posicionArchivo] != -1):
@@ -230,19 +287,22 @@ def actualizarDirectorio():
                 imagen.seek(inicial+20)
                 almacen = struct.pack('<i', (archivos[posicionArchivo].clusterInicial))
                 almacen2 = 1354
-                print("El resultado de la nueva asignacion de la desframentacion es", almacen)
+                print("El resultado de la nueva asignacion de la desframentacion es", struct.unpack('<i', almacen)[0])
                 imagen.write(almacen)
 
-
 def inicio():
-    print("1.")
+
     iniciaMapa()
-    print("2.")
     inicializaArchivos()
+    print("1.")
+    #print(mapaAlmacenamiento)
     print("Directorio:")
     muestraDirectorio()
+    print("Copia Archivo:")
+    copiaArchivoAImagen("C:/2023-1/SO/2/holi.txt")
+    print("2.")
     #copiaArchivoAComputadora("logo.png","C:/Users/steph/Desktop/Tareas 7mosemestre")
-    #borraArchivo("mensajes.png", archivos)
+    #borraArchivo("mensajes.png")
     #copiaArchivoAImagen("C:/Users/steph/Desktop/Tareas 7mosemestre/Ta folla.pdf")
     #print(mapaAlmacenamiento)
     desfragmentar()
@@ -250,10 +310,10 @@ def inicio():
     asignaCluster(100)
     #copiaArchivoAComputadora("README.org","C:/Users/steph/Desktop/Tareas 7mosemestre")
     #copiaArchivoAComputadora("logo.png","C:/Users/steph/Desktop/Tareas 7mosemestre")
-    copiaArchivoAComputadora("mensajes.png","C:/Users/steph/Desktop/Tareas 7mosemestre")
+    copiaArchivoAComputadora("mensajes.png","C:/2023-1/SO/2/")
     #print(mapaAlmacenamiento)
 
-"""""""""    
+"""""""""
 print("Saca datos:")
 sacaDatosArchivo(0)
 nombreSistema = sacaDatosAscii(0,8)
@@ -278,11 +338,3 @@ print(nombreArchivo)
 inicio()
 
 imagen.close()
-
-
-
-
-
-
-
-
