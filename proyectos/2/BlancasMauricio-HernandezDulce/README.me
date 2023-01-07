@@ -1,0 +1,75 @@
+###  Proyecto 2 - Sistema de Archivos
+
+Lo que ustedes deben desarrollar es un programa que pueda obtener, crear y modificar información en el micro-sistema-de-archivos de la Facultad de Ingeniería, FiUnamFS.
+
+Siguiendo la especificación que aparece en la siguiente sección, tienen que desarrollar un programa que pueda:
+
+- Listar los contenidos del directorio
+- Copiar uno de los archivos de dentro del FiUnamFS hacia tu sistema
+- Copiar un archivo de tu computadora hacia tu FiUnamFS
+- Eliminar un archivo del FiUnamFS
+- Desafortunadamente, este sistema de archivos simplote es muy dado a la fragmentación externa. Generen también un programa que desfragmente al FiUnamFS. Ojo, la defragmentación debe hacerse dentro del sistema de archivos (no creando un sistema de archivos nuevo y copiando hacia éste).
+
+
+### Solución
+
+	fs = open('fiunamfs.img', 'r+b')
+	rd = fs.read(60).decode('utf-8')
+	tam = int(rd[40:46].rstrip('\x00'))
+	indicearch = int((int(rd[47:50].rstrip('\x00'))) * 8 * 256 / 64)
+
+Aquí observamos 3 cosas importantes, en primer lugar abrimos nuestra imagen fiunamfs, después de esto leemos lo que se enecuentra dentro y finalmente aplicamos algo parecido a un "length" ya que queremos saber los clusters dentro del directorio.
+
+En la última línea obtenemos el número de archivos que tiene nuestro directorio.
+
+imagen
+
+Aquí obtendremos la información de los archivos, declaramos una lista inicial donde se guardará todo.
+
+	lista = []
+
+Utilizamos un ciclo que nos ayudará a obtener la información de estos archivos o archivo.  Si nuestro primer cluster no está vacío entonces declaramos una segunda lista en donde vamos a ir guardando la información de ese archivo pasando por cada uno de los clusters.
+
+	for i in range(indicearch):
+	fs.seek(tamaux)
+	rd2 = fs.read(64).decode('utf-8')
+
+Esta función fue la primera que realizamos, donde colocamos la información que se pidió en archivos obtenidos de la imagen fiunamfs
+
+	def ordenar():
+	lista = fileunam()
+
+	for z in lista:
+		print('\nNombre:', z[0])
+		print('\nTamaño:', z[1])
+		print('\nCluster inicio:', z[2])
+		print('\nAño creación:', z[3])
+		print('\nMes creación:', z[4])
+		print('\nDía creación:', z[5])
+		print('\nHora creación:', z[6])
+		print('\nMinuto creación:', z[7])
+		print('\nCluster final:', z[8])
+		print('\nSegundo creación:', z[9])
+
+La siguiente función es la que va a copiar un arhivo de fiunamfs a nuestro sistema
+
+	if existe != -1:
+		fs.seek(existe * tam)
+		rd = fs.read(flen)
+		newfile1 = open(nombre2, 'wb')
+		newfile1.write(rd)
+		newfile1.close()
+		print('\nCopiado')
+
+Si el archivo existe entonces lo vamos a leer y con el nombre que se le solicitó al usuario vamos a copiar todo eso en un nuevo archivo y se le colocará el nombre ingresado.
+
+Para la función de borrado, del mismo modo, le solicitamos el nombre del archivo al usuario
+
+	if rd2[0:16].lstrip(' ').rstrip('\x00') == nombre1:
+		fs.seek(tamaux)
+		fs.write(('...............\x0000000000\x0000000\x0000000000000000\x0000000000000000\x00\x00\x00\x00').encode('utf-8'))
+		break
+
+Aquí es donde sucede todo ya que buscamos que el nombre coicnida y una vez que se encuentra se hace una especie de borrado colocando \x00 al archivo.
+
+Finalmente la función de desfragmentación se intentó realizar, sin embargo, no funcionó.
