@@ -1,0 +1,517 @@
+** Barriguete Hector
+- Documentación :: [[./BarrigueteHector/Proyecto#2_BarrigueteRodriguez.pdf][Proyecto#2_BarrigueteRodriguez.pdf]]
+- Archivos :: [[./BarrigueteHector/df.py][df.py]], [[./BarrigueteHector/fiunamfs.img][fiunamfs.img]], [[./BarrigueteHector/proyecto_2.py][proyecto_2.py]], [[./BarrigueteHector/registro_vacio.img][registro_vacio.img]], [[./BarrigueteHector/version.img][version.img]]
+- Comentarios ::
+  - ¡Estás en Python, no en C! ¿Para qué comparar una cadena así?
+    #+begin_src python
+      j = 0
+      if file[j] ==  '-':
+	  while(file[j] == " " or file[j] == "-"):
+	      if j == 15:
+		  break
+	      else:
+		  j += 1
+    #+end_src
+    cuando podrías simplemente hacer:
+    #+begin_src python
+      if file[0:15] == "---------------":
+	  break
+    #+end_src
+  - Tu programa no funcionaba tal como lo mandaste, lanzaba un error
+    al solicitaar las opciones implementadas (1, listar, o 4,
+    eliminar):
+    #+begin_src text
+      Ingresa una opcion: 1
+      Traceback (most recent call last):
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/2/BarrigueteHector/proyecto_2.py", line 219, in <module>
+	  main()
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/2/BarrigueteHector/proyecto_2.py", line 204, in main
+	  mostrar_contenido()
+      TypeError: mostrar_contenido() missing 2 required positional arguments: 'file_system' and 'cluster_size'
+    #+end_src
+    Sólo tuve que agregarle los parámetros requeridos a la llamada
+    (=mostrar_contenido()= → =mostrar_contenido(file_system,
+    cluster_size)= y lo equivalente para
+    =eliminar_archivo()=). Supongo que... ¿me mandaste una versión
+    previa a la definitiva?
+  - Está bien que te documentes/inspires en código de otros
+    alumnos, de semestres anteriores... pero debes considerar que el
+    problema cambia de semestre a semestre 😉
+
+    Me parece que el principal problema que tuviste para calcular los
+    tamaños. Como lo indiqué en las instrucciones y te lo mencioné por
+    correo, la codificación que usé para las magnitudes es la que
+    normalmente usarías para cualquier =int32=, no la representación
+    numérica en una cadena de texto. No pudiste leer el tamaño de
+    cluster ni los tamaños de los archivos porque en vez de obtenerlos
+    con =fh.read(4).decode("utf-8")=  o grabarlos con
+    =fh.write("0000".encode("utf-8"))= (como lo hiciste en tu línea
+    109), tendrías que usar la representación binaria: Leer con
+    =struct.unpack("<I", fh.read(4))= y escribir con
+    =fh.write(struct.pack("<I", size))=.
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.00 |
+| Cumplimiento                     |         5 |        |     0.50 |
+| Claridad de desarrollo           |       7.5 |        |     0.75 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     2.50 |
+| Directorio de proyecto           |       7.5 |        |     0.75 |
+| Código válido                    |       7.5 |        |     0.75 |
+| Comentarios                      |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     1.75 |
+| Estructura                       |        10 |        |     1.00 |
+| Nomenclatura                     |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     1.67 |
+| Documentación externa            |        10 |        |     0.67 |
+| Entorno y dependencias           |         5 |        |     0.33 |
+| Historia en Git                  |        10 |        |     0.67 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     7.92 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** De La Cruz Lopez Carlos Odette
+- Documentación :: [[./DeLaCruzLopezCarlosOdette/proyecto2_DeLaCruzLopezCarlosOdette.pdf][proyecto2_DeLaCruzLopezCarlosOdette.pdf]]
+- Archivos :: [[./DeLaCruzLopezCarlosOdette/fiunamfs.img][fiunamfs.img]], [[./DeLaCruzLopezCarlosOdette/sistemaDeArchivos.py][sistemaDeArchivos.py]], [[./DeLaCruzLopezCarlosOdette/sistemaDeArchivos_versionFinal.py][sistemaDeArchivos_versionFinal.py]]
+- Comentarios ::
+  - ¡Vive Git! ¡Acepta Git! ¡Enamórate de Git! 😉 Sé que te ha costado
+    algo de trabajo... Pero créeme, te puede cambiar la vida (para
+    bien).
+
+    ¿Qué es ese hábito obsoleto de crear un archivo llamado
+    =sistemaDeArchivos_versionFinal.py=?
+  - Entiendo que quieras ahorrar tiempo e iniciar tu programa desde el
+    directorio adecuado, pero al indicar ``en duro'' la ubicación del
+    directorio en *tu* computadora haces que el programa falle en
+    cualquier computadora que no sea la tuya:
+    #+begin_src text
+      $ python3 sistemaDeArchivos_versionFinal.py 
+      Traceback (most recent call last):
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/2/DeLaCruzLopezCarlosOdette/sistemaDeArchivos_versionFinal.py", line 6, in <module>
+	  chdir(directorio)
+      FileNotFoundError: [Errno 2] No such file or directory: '/home/carlosodette0803/sistop-2023-1/proyectos/2/DeLaCruzLopezCarlosOdette'
+    #+end_src
+    - Afortunadamente, basta comentar las líneas 5 y 6 para que
+      funcione.
+    - Veo que mencionaste este punto al final de tu documentación. ¡Te
+      sugiero pensar en cómo se aproxima el usuario a tus programas!
+      Algo necesario para comenzar a utilizarlo tienes que indicarlo
+      antes de indicar nada más. Y... ¡no le pidas al usuario que
+      modifique tu código fuente para usar tus programas! Puedes
+      manejar un archivo de configuración o recibirlo por línea de
+      comando.
+  - Con la interfaz que hiciste, ¡apenas me das tiempo de ver qué
+    información me reporta el sistema! ¡No borres la pantalla en
+    automático, sin esperar a que el usuario se tome un traguito de
+    café y amablemente pueda decirte, "ya terminé de leer lo que
+    quería"!
+    - Como sea, veo y reconozco que le pusiste bastante empeño en
+      darle una salida homogénea y ``bonita'' a la interacción con tu
+      programa.
+  - En la sección en que declaras las variables con los valores que yo
+    les establecí, indicas ``en duro'' algunos valores que deberías
+    estar obteniendo del superbloque (=tamSector=, =cantSectores=,
+    =cantCluster= y similares)
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.00 |
+| Cumplimiento                     |         5 |        |     0.50 |
+| Claridad de desarrollo           |       7.5 |        |     0.75 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     2.50 |
+| Directorio de proyecto           |       7.5 |        |     0.75 |
+| Código válido                    |       7.5 |        |     0.75 |
+| Comentarios                      |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     2.00 |
+| Estructura                       |        10 |        |     1.00 |
+| Nomenclatura                     |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     1.50 |
+| Documentación externa            |        10 |        |     0.67 |
+| Entorno y dependencias           |         5 |        |     0.33 |
+| Historia en Git                  |       7.5 |        |     0.50 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     8.00 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** Fajardo Jesus
+- Documentación :: [[./FajardoJesus/Proyecto2-Fajardo.pdf][Proyecto2-Fajardo.pdf]]
+- Archivos :: [[./FajardoJesus/Proyecto2-Fajardo.py][Proyecto2-Fajardo.py]]
+- Comentarios ::
+  - Recomendación de estilo, por legibilidad de los comentarios: En
+    general, es preferible que el comentario /preceda/ al código que
+    comenta, no que esté a su derecha. Por ejemplo, en vez de:
+    #+begin_src python
+      def ImprimirMenu(): #Función que imprime el menú
+    #+end_src
+    es preferible escribir:
+    #+begin_src python
+      # Función que imprime el menú
+      def ImprimirMenu():
+    #+end_src
+  - Hay comentarios que resultan innecesrios para quien lee con la más
+    básica pericia a tu código. Por ejemplo:
+    #+begin_src python
+      nEspacio = 64 #nEspacio = 64 ya que es el espacio que ocupa el registro de cada archivo
+    #+end_src
+    ¿Cuántos /teclazos/ diste para la definición y cuántos para la
+    explicación? (descontando incluso que repetiste la definición como
+    parte del comentario 😉) En este caso, si consideras que es
+    absolutamente necesario, bastaría decir
+    #+begin_src python
+      nespacio = 64 # Tamaño de cada registro de archivo
+    #+end_src
+    ... E incluso muchas veces verás que eso es innecesario. O, por
+    ejemplo:
+    #+begin_src python
+      #Se obtiene el cluster inicial del archivo siguiente al x
+      ClusterInicialB = (ArchivosOrdenados[x + 1][2])
+    #+end_src
+    Si no te parece claro lo que estás haciendo, piensa si el nombre
+    de variables que estás empleando es suficientemente descriptivo, o
+    auxíliate de funciones (o define una clase con sus métodos)
+    específicas a la tarea, de modo que puedas decir =ClusterInicialB
+    = directorio.archivo(x+1).cluster_inicio()=
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.50 |
+| Cumplimiento                     |       7.5 |        |     0.75 |
+| Claridad de desarrollo           |        10 |        |     1.00 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     2.50 |
+| Directorio de proyecto           |       7.5 |        |     0.75 |
+| Código válido                    |        10 |        |     1.00 |
+| Comentarios                      |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     1.50 |
+| Estructura                       |       7.5 |        |     0.75 |
+| Nomenclatura                     |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     1.67 |
+| Documentación externa            |        10 |        |     0.67 |
+| Entorno y dependencias           |        10 |        |     0.67 |
+| Historia en Git                  |         5 |        |     0.33 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     8.17 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** Guerrero Issac
+- Documentación :: [[./GuerreroIssac/Sistema_de_archivos.pdf][Sistema_de_archivos.pdf]]
+- Archivos :: [[./GuerreroIssac/fiunamfs.img][fiunamfs.img]], [[./GuerreroIssac/sistemaArchivos.py][sistemaArchivos.py]]
+- Comentarios ::
+  - Tu nombre no consta ni en tu implementación ni en tu
+    documentación. ¡Importantísimo!
+    - La documentación presenta una muestra acerca del uso del
+      sistema, pero omite los requisitos para su funcionamiento, la
+      estrategia empleada -- los puntos que a mí más me interesan:
+      Cómo describes que funciona tu programa por dentro.
+  - Es incorrecto referirse al _tamaño_ de un archivo como su
+    _peso_. Sé que es un uso coloquial habitual, pero entre
+    profesionales no se vale.
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.50 |
+| Cumplimiento                     |       7.5 |        |     0.75 |
+| Claridad de desarrollo           |        10 |        |     1.00 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     2.75 |
+| Directorio de proyecto           |       7.5 |        |     0.75 |
+| Código válido                    |        10 |        |     1.00 |
+| Comentarios                      |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     2.00 |
+| Estructura                       |        10 |        |     1.00 |
+| Nomenclatura                     |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     0.99 |
+| Documentación externa            |         5 |        |     0.33 |
+| Entorno y dependencias           |         5 |        |     0.33 |
+| Historia en Git                  |         5 |        |     0.33 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     8.24 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** Mejia Bryan
+- Documentación :: [[./MejiaBryan/Proyecto 2  SO.pdf][Proyecto 2  SO.pdf]]
+- Archivos :: [[./MejiaBryan/SA SO Bryan.py][SA SO Bryan.py]]
+- Comentarios ::
+  - Mencionas un problema de alineación leyendo el directorio desde el
+    caracter 1024. ¡Muy curioso! Yo no veo ese error. Considerando que
+    la representación en hexadecimal de 1024 es 0x400, aquí tienes la
+    representación binaria de las primeras cuatro entradas del
+    directorio:
+    #+begin_src text
+      $ hd ../fiunamfs.img -s 1024 -n 256
+      00000400  2d 20 20 20 20 52 45 41  44 4d 45 2e 6f 72 67 00  |-    README.org.|
+      00000410  66 79 00 00 05 00 00 00  32 30 32 32 31 32 30 38  |fy......20221208|
+      00000420  31 37 31 39 31 31 32 30  32 32 31 32 30 38 31 37  |1719112022120817|
+      00000430  31 39 31 31 00 00 00 00  00 00 00 00 00 00 00 00  |1911............|
+      00000440  2d 2d 2d 2d 2d 2d 2d 2d  2d 2d 2d 2d 2d 2d 2d 00  |---------------.|
+      00000450  00 00 00 00 00 00 00 00  30 30 30 30 30 30 30 30  |........00000000|
+      00000460  30 30 30 30 30 30 30 30  30 30 30 30 30 30 30 30  |0000000000000000|
+      00000470  30 30 30 30 00 00 00 00  00 00 00 00 00 00 00 00  |0000............|
+      00000480  2d 20 20 20 20 20 20 6c  6f 67 6f 2e 70 6e 67 00  |-      logo.png.|
+      00000490  97 de 02 00 11 00 00 00  32 30 32 32 31 32 30 38  |........20221208|
+      000004a0  31 37 31 39 31 31 32 30  32 32 31 32 30 38 31 37  |1719112022120817|
+      000004b0  31 39 31 31 00 00 00 00  00 00 00 00 00 00 00 00  |1911............|
+      000004c0  2d 2d 2d 2d 2d 2d 2d 2d  2d 2d 2d 2d 2d 2d 2d 00  |---------------.|
+      000004d0  00 00 00 00 00 00 00 00  30 30 30 30 30 30 30 30  |........00000000|
+      000004e0  30 30 30 30 30 30 30 30  30 30 30 30 30 30 30 30  |0000000000000000|
+      000004f0  30 30 30 30 00 00 00 00  00 00 00 00 00 00 00 00  |0000............|
+      00000500
+    #+end_src
+  - Respecto al problema al llamar a =convertir()=, el error se
+    presenta porque un =unpack('<I')= necesita forzosamente recibir 4
+    bytes (32 bits); si le das 3 bytes (tu llamada es a
+    =convertir(FSFI.read(3))=), cualquier resultado que te dé
+    resultaría incorrecto (y por eso lanza la excepción). ¡Me parece
+    muy extraño que reportes que te funciona con /cualquier número
+    par! Puedes ver que obtengo el mismo error que tú para cualquier
+    cadena de bytes que no sean 4.
+    #+begin_src python
+      >>> struct.unpack('<I',b'AB')
+      Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+      struct.error: unpack requires a buffer of 4 bytes
+      >>> struct.unpack('<I',b'ABC')
+      Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+      struct.error: unpack requires a buffer of 4 bytes
+      >>> struct.unpack('<I',b'ABCD')
+      (1145258561,)
+      >>> struct.unpack('<I',b'ABCDE')
+      Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+      struct.error: unpack requires a buffer of 4 bytes
+      >>> struct.unpack('<I',b'ABCDEFGH')
+      Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+      struct.error: unpack requires a buffer of 4 bytes
+    #+end_src
+    - Naturalmente, los valores que obtienes para el tamaño de los
+      archivos es incorrecto 🙁
+  - Para poder verificar con mi archivo de pruebas, tuve que quitar
+    las referencias a tu cuenta con Google Colab. Probé con la imagen
+    que les dí de referencia, pero... Falló al listar archivos:
+    #+begin_src python
+      $ python3 SA\ SO\ Bryan.py 
+      ----Sistema de archivos FI----
+      Nombre: FiUnamFS
+      Version: 23.1
+      Volumen:  FI-UNAM 2023-1
+      Tamano Cluster: 1024
+      Tamaño de Cluster en directorio: 4
+      Tamaño Cluster de Unidad Completa: 720
+
+
+
+      ¿Que deseas realizar? :)
+      Opciones: 
+      Mostrar lista de archivos = ''lsar''
+      Copiar =                    ''cp-archivo-destino''
+      Borrar =                    ''del-archivo''
+      Salir =                     ''exit''
+      lsar
+
+
+      Tipo-----Nombre-----Tamaño----Cluster inicial----Fecha y hora de creación---Ultima modificacion
+	    README.orgf 83886201        838860800             2212-08-17 19:11:20      2212-08-17 19:11:
+	- ------------ 0        805306368             2212-08-17 19:11:20      2212-08-17 19:11:
+	  Traceback (most recent call last):
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/2/MejiaBryan/SA SO Bryan.py", line 96, in <module>
+	  printList()
+	File "/home/gwolf/vcs/sistop-2023-1/proyectos/2/MejiaBryan/SA SO Bryan.py", line 43, in printList
+	  print(""+FSFI.read(14).decode()+"", end = "")                                                     #Imprime Nombre
+      UnicodeDecodeError: 'utf-8' codec can't decode byte 0x97 in position 13: invalid start byte
+      bash-5.2$ git diff .
+    #+end_src
+    Me parece que /algo/ se movió cuando lo subiste a Google (?),
+    porque tengo el síntoma opuesto del corrimiento de 2 bytes que
+    reportas (???)
+
+    Quitando tu corrección, el listado de archivos funcionó
+    correctamente (aunque tamaño y cluster inicial resultaron
+    equivocados, como era de esperar):
+    #+begin_src text
+      Tipo-----Nombre-----Tamaño----Cluster inicial----Fecha y hora de creación---Ultima modificacion
+	-     README.org 7955968        1280             2022-12-08 17:19:11      2022-12-08 17:19:11
+	-       logo.png 48142080        4352             2022-12-08 17:19:11      2022-12-08 17:19:11
+	-   mensajes.png 75859456        90368             2022-12-08 17:19:11      2022-12-08 17:19:11
+    #+end_src
+  - Desafortunadamente, supongo que la confusión que tuviste hizo que
+    no pudieras implementar buena parte de la funcionalidad requerida
+    😢
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.00 |
+| Cumplimiento                     |         5 |        |     0.50 |
+| Claridad de desarrollo           |       7.5 |        |     0.75 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     2.50 |
+| Directorio de proyecto           |        10 |        |     1.00 |
+| Código válido                    |       7.5 |        |     0.75 |
+| Comentarios                      |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     2.00 |
+| Estructura                       |        10 |        |     1.00 |
+| Nomenclatura                     |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     1.67 |
+| Documentación externa            |        10 |        |     0.67 |
+| Entorno y dependencias           |        10 |        |     0.67 |
+| Historia en Git                  |         5 |        |     0.33 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     8.17 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** Mendez Erick, Rodriguez Carla
+- Documentación :: [[./MendezErick-RodriguezCarla/Proyecto 2.pdf][Proyecto 2.pdf]]
+- Archivos :: [[./MendezErick-RodriguezCarla/proyecto2.py][proyecto2.py]]
+- Comentarios ::
+  - Recomendación por legibilidad: Dejen líneas vacías al terminar con
+    un ``tema'' o una acción en su código (por ejemplo, después de un
+    bloque de declaraciones o al cerrar la definición de una función),
+    del mismo modo que se dejan entre párrafos en la prosa. Ayuda
+    mucho a la lectura.
+  - ¡Muy bien por permitirme especifica qué sistema de archivos usar
+    en vez de codificarlo /en duro/! 😃
+    - ¡Y muy bien por asegurarse de que el sistema de archivos tiene
+      el formato correcto!
+  - La desfragmentación tiene un error de lógica que podría ser
+    peligroso: Para determinar si van a fragmentar sobre determinado
+    cluster, comparan /el primer caracter del cluster/ con =\x00=. En
+    un archivo binario este /es un caracter legal/, y podría causar
+    una corrupción insalvable de datos.
+
+    Además, recuerden que al eliminar un archivo, se borran /sus
+    metadatos del directorio/, pero (por rendimiento) un sistema de
+    archivos real no vacía el espacio que ocupaba en la región de datos.
+
+    Para determinar cuáles clusters están vacíos no hay que hacerlo
+    utilizando los datos, sino que /los metadatos que tenemos en el
+    directorio/.
+  - Tienen muchos valores indicados /en duro/ en su código, a pesar de
+    que los detectaron al leer el superbloque (p.ej. línea 39,
+    =tamanioCluster = self.leerBytes(file, 40, 44)=). Sin embargo, en
+    vez de usar =tamanioCluster, en (me parece) 18 ocasiones aparece
+    literalmente el valor =1024= para hacer cálculos del tamaño del
+    cluster.
+
+| *Rubro*                          | *Parcial* | *Peso* | *Puntos* |
+|----------------------------------+-----------+--------+----------|
+| *Proyecto*                       |           |    0.3 |     2.50 |
+| Cumplimiento                     |        10 |        |     1.00 |
+| Claridad de desarrollo           |       7.5 |        |     0.75 |
+| Interfaz usuario                 |       7.5 |        |     0.75 |
+|----------------------------------+-----------+--------+----------|
+| *Desarrollo*                     |           |    0.3 |     3.00 |
+| Directorio de proyecto           |        10 |        |     1.00 |
+| Código válido                    |        10 |        |     1.00 |
+| Comentarios                      |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Legibilidad*                    |           |    0.2 |     2.00 |
+| Estructura                       |        10 |        |     1.00 |
+| Nomenclatura                     |        10 |        |     1.00 |
+|----------------------------------+-----------+--------+----------|
+| *Entrega*                        |           |    0.2 |     1.67 |
+| Documentación externa            |        10 |        |     0.67 |
+| Entorno y dependencias           |        10 |        |     0.67 |
+| Historia en Git                  |         5 |        |     0.33 |
+|----------------------------------+-----------+--------+----------|
+| *Extras*                         |           |        |     0.00 |
+| Directorios jerárquicos          |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora |           |    0.1 |     0.00 |
+|----------------------------------+-----------+--------+----------|
+| *TOTAL*                          |           |        |     9.17 |
+|----------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
+
+** Muñoz María, Tafolla Esteban
+- Documentación :: [[./MuñozMaría-TafollaEsteban/SO_Proyecto2.pdf][SO_Proyecto2.pdf]]
+- Archivos :: [[./MuñozMaría-TafollaEsteban/SistemaDeArchivos.py][SistemaDeArchivos.py]], [[./MuñozMaría-TafollaEsteban/fiunamfs.img][fiunamfs.img]]
+- Comentarios ::
+  - ¡Muy buena estructura! Incluso las funciones más complejas
+    conceptualmente (p.ej. =desfragmentar()=) son apenas poco más de
+    una decena de líneas, y llaman a funciones más específicas
+    (p.ej. =moverArchivosEnImagen()=, =actualizarArchivos()=, etc.)
+  - La desfragmentación ocurre de forma implícita y en automático al
+    copiar archivos de/hacia =fiunamfs=, no es una opción
+    explícita. Eso está bien, pero tuve que darle un par de vueltas
+    para encontrar que efectivamente cumplían los requisitos. ¡Hay que
+    ser expresos al documentarlo!
+  - Recomendación por /buena práctica de programación/: Muchos valores
+    los especifican /en duro/ en su código. Por ejemplo, si bien en la
+    línea 40 tienen que =clustersUnidad = datoUnpack(50,4) #Da 720=,
+    usan 720 de forma literal en la línea 70 (=while
+    (len(mapaAlmacenamiento) !=720):=), 77 (=for x in range(720):=),
+    237 (=if(clusterInicialPosible+clustersDeArchivo<720):=). ¿Y qué
+    pasa si intentan correr el código en un sistema de archivos que
+    /no tenga/ 720 clusters?
+
+| *Rubro*                                           | *Parcial* | *Peso* | *Puntos* |
+|---------------------------------------------------+-----------+--------+----------|
+| *Proyecto*                                        |           |    0.3 |     2.75 |
+| Cumplimiento                                      |        10 |        |     1.00 |
+| Claridad de desarrollo                            |        10 |        |     1.00 |
+| Interfaz usuario                                  |       7.5 |        |     0.75 |
+|---------------------------------------------------+-----------+--------+----------|
+| *Desarrollo*                                      |           |    0.3 |     2.75 |
+| Directorio de proyecto                            |       7.5 |        |     0.75 |
+| Código válido                                     |        10 |        |     1.00 |
+| Comentarios                                       |        10 |        |     1.00 |
+|---------------------------------------------------+-----------+--------+----------|
+| *Legibilidad*                                     |           |    0.2 |     2.00 |
+| Estructura                                        |        10 |        |     1.00 |
+| Nomenclatura                                      |        10 |        |     1.00 |
+|---------------------------------------------------+-----------+--------+----------|
+| *Entrega*                                         |           |    0.2 |     2.01 |
+| Documentación externa                             |        10 |        |     0.67 |
+| Entorno y dependencias                            |        10 |        |     0.67 |
+| Historia en Git                                   |        10 |        |     0.67 |
+|---------------------------------------------------+-----------+--------+----------|
+| *Extras*                                          |           |        |     0.00 |
+| Directorios jerárquicos                           |           |    0.1 |     0.00 |
+| Sistema de archivos con bitácora                  |           |    0.1 |     0.00 |
+|---------------------------------------------------+-----------+--------+----------|
+| *TOTAL*                                           |           |        |     9.51 |
+| *+1 punto* por indicarme un error en mis datos 😃 |           |        |    10.51 |
+|---------------------------------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3+@4+@5 ; f-2::@3$4=$2*@2$3/3 ; f-2::@4$4=$2*@2$3/3 ; f-2::@5$4=$2*@2$3/3 ; f-2::@6$4=@7+@8+@9 ; f-2::@7$4=$2*@6$3/3 ; f-2::@8$4=$2*@6$3/3 ; f-2::@9$4=$2*@6$3/3 ; f-2::@10$4=@11+@12 ; f-2::@11$4=$2*@10$3/2 ; f-2::@12$4=$2*@10$3/2 ; f-2::@13$4=@14+@15+@16 ; f-2::@14$4=$2*@13$3/3 ; f-2::@15$4=$2*@13$3/3 ; f-2::@16$4=$2*@13$3/3 ; f-2::@17$4=@17+@18 ; f-2::@18$4=$2*@18$3 ; f-2::@19$4=$2*@19$3 ; f-2::@20$4=@2+@6+@10+@13+@17 ; f-2
