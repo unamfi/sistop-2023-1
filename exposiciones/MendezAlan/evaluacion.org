@@ -1,7 +1,7 @@
-#+title: Exposición: 
+#+title: Exposición: Windows y el CMD
 #+author: Gunnar Wolf
 
-- Tema presentado por :: 
+- Tema presentado por :: Alan Méndez
 - Calificación global :: 8.15  * 0.3 + 6.5 * 0.7 = *6.99*
 
 * Evaluación grupal

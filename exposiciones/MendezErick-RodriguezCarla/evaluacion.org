@@ -1,7 +1,7 @@
-#+title: Exposición: 
+#+title: Exposición: Enfermedad y cura: virus y antivirus
 #+author: Gunnar Wolf
 
-- Tema presentado por :: 
+- Tema presentado por :: Erick Jair Méndez y Carla Elizabeth Rodríguez
 - Calificación global :: 8.61 * 0.3 + 8.13 * 0.7 = *8.27*
 
 * Evaluación grupal
