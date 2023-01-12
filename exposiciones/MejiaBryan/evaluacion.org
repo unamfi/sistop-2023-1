@@ -1,0 +1,37 @@
+#+title: Exposición: Sistemas operativos en consolas de videojuegos
+#+author: Gunnar Wolf
+
+- Tema presentado por :: Bryan Mejía Ramos
+- Calificación global :: 9.67 * 0.3 + 8.5 * 0.7 = *8.85*
+
+* Evaluación grupal
+
+[[./evaluacion_alumnos.pdf][Evaluaciones individuales de los alumnos]]
+
+|--------------+-------+------------+----------+-----------+-------|
+| Originalidad | Nivel | Relevancia | Claridad | Presencia | Total |
+|--------------+-------+------------+----------+-----------+-------|
+|              |       |            |          |           |       |
+|           10 |    10 |        7.5 |       10 |        10 |  9.50 |
+|           10 |    10 |         10 |       10 |        10 |    10 |
+|           10 |    10 |         10 |       10 |       7.5 |  9.50 |
+|              |       |            |          |           |       |
+|--------------+-------+------------+----------+-----------+-------|
+|           10 |    10 |       9.17 |       10 |      9.17 |  9.67 |
+|--------------+-------+------------+----------+-----------+-------|
+#+TBLFM: @>$1..@>$6=vmean(@II..@III-1); f-2::@3$>..@>>>$>=vmean($1..$5); f-2
+
+* Evaluación del docente
+
+| *Aspecto*              | *Peso* | *Evaluación* | *Puntos* |
+|------------------------+--------+--------------+----------|
+| Originalidad del tema  |    0.1 |           10 |       1. |
+| Material desarrollado  |    0.2 |            5 |       1. |
+| Contenido              |    0.2 |           10 |       2. |
+| Fuentes bibliográficas |    0.1 |            5 |      0.5 |
+| Uso del tiempo         |    0.1 |           10 |       1. |
+| Dominio del tema       |   0.15 |           10 |      1.5 |
+| Presencia              |   0.15 |           10 |      1.5 |
+|------------------------+--------+--------------+----------|
+| *Global*               |        |              |     8.50 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
